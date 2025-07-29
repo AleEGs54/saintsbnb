@@ -13,7 +13,7 @@ https://saintsbnb.onrender.com
 3. Set environment variables such as `PORT`.
 4. Before creating a branch, make sure your local main is up to date: `git checkout main`
 `git pull origin main`
-5. Create a new branch with a descriptive name: 'new-feature-branch'
+5. Create a new branch with a descriptive name: `your-feature-name`
 6. Work on your feature only in that branch.
 Do not commit directly to main to avoid conflicts.
 7. When done, commit your changes with a clear message: 
