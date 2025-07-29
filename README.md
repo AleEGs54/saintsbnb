@@ -56,9 +56,10 @@ Make sure to create a `.env` file in the root directory. The following variables
 | NODE_ENV         | Defines the node environment        |
 | MONGODB_URI      | MongoDB connection string           |
 | SESSION_SECRET   | Secret key for session encryption   |
-| GITHUB_CLIENT_ID | GitHub OAuth client ID              |
-| GITHUB_SECRET    | GitHub OAuth secret                 |
+| GITHUB_CLIENT_ID | GitHub OAuth client ID. But can be another service              |
+| GITHUB_SECRET    | GitHub OAuth secret. But can be another service.                 |
 
+Kindly share the variables so we all can use them.
 
 ### Pull Request Checklist
 
