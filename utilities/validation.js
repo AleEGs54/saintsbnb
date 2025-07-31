@@ -1,0 +1,121 @@
+// utilities/validation.js
+const { body, validationResult } = require('express-validator');
+
+// Validation rules for user creation/update
+const usersValidationRules = [
+    body('name')
+        .trim()
+        .isLength({ min: 1 })
+        .withMessage('Name is required.')
+        .matches(/^[a-zA-Z\s]+$/)
+        .withMessage('Name must contain only letters and spaces.'),
+    body('email')
+        .trim()
+        .isEmail()
+        .withMessage('A valid email is required.')
+        .normalizeEmail(), // Sanitizes email (e.g., lowercase)
+    body('password') // Add password validation for registration (if not coming from OAuth)
+        .optional() // Make password optional, as OAuth users might not have one
+        .isLength({ min: 8 })
+        .withMessage('Password must be at least 8 characters long.')
+        .matches(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()])[A-Za-z\d!@#$%^&*()]{8,}$/,
+        )
+        .withMessage(
+            'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
+        ),
+    body('phone')
+        .optional() // Phone is optional
+        .isMobilePhone('any') // Validates as a mobile phone number
+        .withMessage('A valid phone number is required.'),
+    body('role')
+        .trim()
+        .isIn(['guest', 'host', 'admin'])
+        .withMessage('Role must be guest, host, or admin.')
+        .toLowerCase(),
+];
+
+// Validation rules for local login (email and password)
+const loginValidationRules = [
+    body('email')
+        .trim()
+        .isEmail()
+        .withMessage('A valid email is required for login.')
+        .normalizeEmail(),
+    body('password')
+        .trim()
+        .notEmpty()
+        .withMessage('Password is required for login.'),
+];
+
+// Middleware to handle validation results
+const validate = (req, res, next) => {
+    const errors = validationResult(req);
+    if (errors.isEmpty()) {
+        return next(); // If no errors, proceed to the next middleware/controller
+    }
+    const extractedErrors = [];
+    errors.array().map((err) => extractedErrors.push({ [err.path]: err.msg }));
+
+    return res.status(400).json({
+        errors: extractedErrors,
+        message: 'Validation failed. Please check your input.',
+    });
+};
+
+// Validation rules for housing posts
+const housingValidationRules = [
+    body('rooms')
+        .isInt({ min: 1 })
+        .withMessage('Number of rooms must be a positive integer.'),
+    body('availability')
+        .isBoolean()
+        .withMessage('Availability must be a boolean value (true/false).')
+        .optional(), // Optional on update, but required for creation (handled by schema default)
+    body('price')
+        .isFloat({ min: 0 })
+        .withMessage('Price must be a positive number.'),
+    body('address')
+        .trim()
+        .isLength({ min: 5 })
+        .withMessage(
+            'Address is required and must be at least 5 characters long.',
+        ),
+    body('maxOccupants')
+        .isInt({ min: 1 })
+        .withMessage('Max occupants must be a positive integer.'),
+    body('features')
+        .optional()
+        .isArray()
+        .withMessage('Features must be an array of strings.')
+        .custom((value) => value.every((item) => typeof item === 'string'))
+        .withMessage('All features must be strings.'),
+    body('description')
+        .optional()
+        .trim()
+        .isLength({ min: 10 })
+        .withMessage('Description must be at least 10 characters long.'),
+    body('images')
+        .optional()
+        .isArray()
+        .withMessage('Images must be an array of URLs.')
+        .custom((value) =>
+            value.every(
+                (item) =>
+                    typeof item === 'string' &&
+                    (item.startsWith('http://') ||
+                        item.startsWith('https://') ||
+                        item.startsWith('/images/')),
+            ),
+        )
+        .withMessage(
+            'All images must be valid URLs or relative paths starting with /images/.',
+        ),
+];
+
+module.exports = {
+    usersValidationRules,
+    loginValidationRules,
+    housingValidationRules,
+    validate,
+};

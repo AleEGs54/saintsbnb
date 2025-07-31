@@ -1,4 +1,6 @@
 const swaggerAutogen = require('swagger-autogen')();
+require('dotenv').config();
+const port = process.env.PORT;
 
 const doc = {
     info: {
@@ -6,7 +8,7 @@ const doc = {
         description:
             'Api for SaintsBnB to display endpoints available and ready for consumption',
     },
-    host: 'localhost:3000',
+    host: port,
 };
 
 const outputFile = './swagger-output.json';

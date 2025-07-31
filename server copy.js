@@ -8,7 +8,6 @@ const port = process.env.PORT;
 // Import session and passport config
 const session = require('express-session');
 const passportConfig = require('./auth/passport');
-const flash = require('connect-flash');
 
 // app config
 app.use(cors()); //Allows requests from any origin
@@ -29,8 +28,6 @@ app.use(
         },
     }),
 );
-
-app.use(flash());
 
 // Initialize Passport after session middleware
 passportConfig(app); // Call the passport config function and pass the app instance
