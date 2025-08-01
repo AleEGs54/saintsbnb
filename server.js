@@ -4,11 +4,10 @@ const cors = require('cors');
 require('dotenv').config();
 const port = process.env.PORT;
 
-// Import the connectDB function from models/db.js 
-const connectDB = require('./models/db');
+// Import the connectDB function from database/index
+const connectDB = require('./databaseb');
 // Connect to MongoDB
-connectDB()
-
+connectDB();
 
 //app config
 app.use(cors()); //Allows requests from any origin
