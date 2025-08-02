@@ -41,7 +41,15 @@ reservationController.getById = async (req, res) => {
 // Create new reservation
 reservationController.createReservation = async (req, res) => {
     try {
-        const newReservation = await Reservation.create(req.body);
+        const newReservation = await Reservation.create(
+            {
+                post_id: req.body.post_id,
+                user_id: req.body.user_id,
+                check_in_date: req.body.check_in_date,
+                check_out_date: req.body.check_out_date,
+                status: req.body.status,
+                total_price: req.body.total_price
+            });
         res.status(201).json(newReservation);
     } catch (err) {
         console.error(err);
@@ -57,7 +65,14 @@ reservationController.updateReservation = async (req, res) => {
     try {
         const updatedReservation = await Reservation.findByIdAndUpdate(
             req.params.id,
-            req.body,
+            {
+                post_id: req.body.post_id,
+                user_id: req.body.user_id,
+                check_in_date: req.body.check_in_date,
+                check_out_date: req.body.check_out_date,
+                status: req.body.status,
+                total_price: req.body.total_price
+            },
             { new: true, runValidators: true }
         );
 
@@ -84,10 +99,10 @@ reservationController.deleteReservation = async (req, res) => {
         if (!deletedReservation) {
             return res.status(404).json({ message: 'Reservation/booking not found' });
         }
-        
-        res.status(200).json({ 
+
+        res.status(200).json({
             message: 'Reservation/booking deleted successfully',
-            deletedReservation 
+            deletedReservation
         });
     } catch (err) {
         console.error(err);

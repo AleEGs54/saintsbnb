@@ -28,6 +28,41 @@
       },
       "post": {
         "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "example": "object_id"
+                },
+                "rooms": {
+                  "example": "number"
+                },
+                "availability": {
+                  "example": "string"
+                },
+                "owner": {
+                  "example": "string"
+                },
+                "price": {
+                  "example": "string"
+                },
+                "address": {
+                  "example": "string"
+                },
+                "max_occupants": {
+                  "example": "number"
+                },
+                "location": {
+                  "example": "string"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
@@ -69,6 +104,39 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "example": "object_id"
+                },
+                "rooms": {
+                  "example": "number"
+                },
+                "availability": {
+                  "example": "string"
+                },
+                "owner": {
+                  "example": "string"
+                },
+                "price": {
+                  "example": "string"
+                },
+                "address": {
+                  "example": "string"
+                },
+                "max_occupants": {
+                  "example": "number"
+                },
+                "location": {
+                  "example": "string"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -147,6 +215,35 @@
       },
       "post": {
         "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_id": {
+                  "example": "object_id"
+                },
+                "user_id": {
+                  "example": "object_id"
+                },
+                "check_in_date": {
+                  "example": "date(yy-mm-dd)"
+                },
+                "check_out_date": {
+                  "example": "date(yy-mm-dd)"
+                },
+                "status": {
+                  "example": "string"
+                },
+                "total_price": {
+                  "example": "string"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
@@ -188,6 +285,33 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_id": {
+                  "example": "object_id"
+                },
+                "user_id": {
+                  "example": "object_id"
+                },
+                "check_in_date": {
+                  "example": "date(yy-mm-dd)"
+                },
+                "check_out_date": {
+                  "example": "date(yy-mm-dd)"
+                },
+                "status": {
+                  "example": "string"
+                },
+                "total_price": {
+                  "example": "string"
+                }
+              }
+            }
           }
         ],
         "responses": {
