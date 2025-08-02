@@ -6,6 +6,7 @@ const postController = {};
 postController.getAll = async (req, res) => {
     try {
         const result = await Post.find();
+        console.log(result)
         if (result.length === 0) {
             return res.status(404).json({ message: 'No posts found' });
         }
@@ -56,7 +57,16 @@ postController.getByLocation = async (req, res) => {
 // POST new post
 postController.createPost = async (req, res) => {
     try {
-        const newPost = await Post.create(req.body);
+        const newPost = await Post.create({
+            user_id: req.body.user_id,
+            rooms: req.body.rooms,
+            availability: req.body.availability,
+            owner: req.body.owner,
+            price: req.body.price,
+            address: req.body.address,
+            max_occupants: req.body.max_occupants,
+            location: req.body.location,
+        });
         res.status(201).json(newPost);
     } catch (err) {
         console.error(err);
@@ -72,7 +82,16 @@ postController.updatePost = async (req, res) => {
     try {
         const updatedPost = await Post.findByIdAndUpdate(
             req.params.id,
-            req.body,
+            {
+                user_id: req.body.user_id,
+                rooms: req.body.rooms,
+                availability: req.body.availability,
+                owner: req.body.owner,
+                price: req.body.price,
+                address: req.body.address,
+                max_occupants: req.body.max_occupants,
+                location: req.body.location,
+            },
             { new: true, runValidators: true }
         );
 
