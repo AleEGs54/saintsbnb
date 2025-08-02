@@ -1,16 +1,11 @@
 // controllers/userController.js
 const userModel = require('../models/userModel');
-
+const passport = require('passport');
 const userController = {};
 
-/**
- * @function registerUser
- * @description Registers a new user with local credentials.
- * @param {object} req - Express request object (expects name, email, password, phone, role in body).
- * @param {object} res - Express response object.
- * @param {function} next - Express next middleware function.
- */
+// register a new user as a client
 userController.registerUser = async (req, res, next) => {
+    //#swagger.tags = ['Users']
     const { name, email, password, phone, role } = req.body;
     try {
         // Check if user already exists
@@ -21,66 +16,52 @@ userController.registerUser = async (req, res, next) => {
                 .json({ message: 'Email already registered.' });
         }
 
-        // Create a new user instance
+        // Create a new user instance and save it to the database
         const newUser = new userModel({ name, email, password, phone, role });
         await newUser.save();
 
-        req.logIn(newUser, (err) => {
-            if (err) {
-                console.error('Error logging in after registration:', err);
-                // Return 201 for successful registration, even if auto-login fails
-                return res.status(201).json({
-                    message:
-                        'User registered successfully, but automatic login failed. Please try logging in.',
-                    user: {
-                        _id: newUser._id,
-                        name: newUser.name,
-                        email: newUser.email,
-                        role: newUser.role,
-                    },
-                });
-            }
-            res.status(201).json({
-                message: 'User registered and logged in successfully!',
-                user: {
-                    _id: newUser._id,
-                    name: newUser.name,
-                    email: newUser.email,
-                    role: newUser.role,
-                },
+        // Wrap req.logIn in a Promise to use it with async/await
+        await new Promise((resolve, reject) => {
+            req.logIn(newUser, (err) => {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve();
             });
         });
+
+        // If login is successful, send the response
+        return res.status(201).json({
+            message: 'User registered and logged in successfully!',
+            user: {
+                _id: newUser._id,
+                name: newUser.name,
+                email: newUser.email,
+                role: newUser.role,
+            },
+        });
     } catch (error) {
+        // If there's a duplicate key error, return a 409 error
         if (error.code === 11000) {
             return res.status(409).json({ message: 'Email already exists.' });
         }
-        next(error); // Pass other errors to the error handler
+
+        // Pass other errors to the error handling middleware
+        return next(error);
     }
 };
 
-/**
- * @function getAllUsers
- * @description Retrieves all users.
- * @param {object} req - Express request object.
- * @param {object} res - Express response object.
- * @param {function} next - Express next middleware function.
- */
+// get all users
 userController.getAllUsers = async (req, res, next) => {
     try {
         const users = await userModel.find({}); // Find all users
-        res.status(200).json(users); // Respond with all users
+        return res.status(200).json(users); // Respond with all users
     } catch (error) {
-        next(error);
+        return next(error);
     }
 };
 
-/**
- * @function getUser
- * @description Retrieves a single user by ID.
- * @param {object} req - Express request object.
- * @param {object} res - Express response object.
- * @param {function} next - Express next middleware function.
- */
+// get user by ID
 userController.getUser = async (req, res, next) => {
     const userId = req.params.id; // Get user ID from URL parameters
     try {
@@ -91,35 +72,28 @@ userController.getUser = async (req, res, next) => {
             return res.status(404).json({ message: 'User not found.' });
         }
 
-        res.status(200).json(user); // Respond with the user data
+        return res.status(200).json(user); // Respond with the user data
     } catch (error) {
         // Pass any Mongoose or other errors to the error handling middleware
-        next(error);
+        return next(error);
     }
 };
 
-/**
- * @function createUser
- * @description Creates a new user (typically for admin use or internal processes,
- * distinct from self-registration via /register).
- * @param {object} req - Express request object.
- * @param {object} res - Express response object.
- * @param {function} next - Express next middleware function.
- */
+// create a new user as an admin
 userController.createUser = async (req, res, next) => {
-    const userData = req.body; // Get user data from request body
+    const { name, email, password, phone, role } = req.body; // Get user data from request body
     try {
         // Check if user already exists
-        const existingUser = await userModel.findOne({ email: userData.email });
+        const existingUser = await userModel.findOne({ email });
         if (existingUser) {
             return res.status(409).json({ message: 'Email already exists.' });
         }
 
         // Create a new user instance and save it to the database
-        const newUser = new userModel(userData);
+        const newUser = new userModel({ name, email, password, phone, role });
         await newUser.save();
 
-        res.status(201).json({
+        return res.status(201).json({
             message: 'User created successfully!',
             user: newUser,
         });
@@ -127,31 +101,25 @@ userController.createUser = async (req, res, next) => {
         if (error.code === 11000) {
             return res.status(409).json({ message: 'Email already exists.' });
         }
-        // Handle validation errors if any (e.g., if 'password' is required but not provided in userData)
+        // Handle validation errors
         if (error.name === 'ValidationError') {
             return res
                 .status(400)
                 .json({ message: error.message, errors: error.errors });
         }
-        next(error);
+        return next(error);
     }
 };
 
-/**
- * @function updateUser
- * @description Updates an existing user by ID.
- * @param {object} req - Express request object.
- * @param {object} res - Express response object.
- * @param {function} next - Express next middleware function.
- */
+// update users by ID
 userController.updateUser = async (req, res, next) => {
     const userId = req.params.id; // Get user ID from URL parameters
-    const updateData = req.body; // Get update data from request body
+    const { name, email, password, phone, role } = req.body; // Get update data from request body
     try {
-        // Find user by ID and update, return the updated document
+        // Find user by ID and update, returning the updated document
         const updatedUser = await userModel.findByIdAndUpdate(
             userId,
-            updateData,
+            { name, email, password, phone, role },
             { new: true, runValidators: true },
         );
 
@@ -159,7 +127,7 @@ userController.updateUser = async (req, res, next) => {
             return res.status(404).json({ message: 'User not found.' });
         }
 
-        res.status(200).json({
+        return res.status(200).json({
             message: 'User updated successfully!',
             user: updatedUser,
         });
@@ -172,17 +140,11 @@ userController.updateUser = async (req, res, next) => {
         if (error.code === 11000) {
             return res.status(409).json({ message: 'Email already exists.' });
         }
-        next(error);
+        return next(error);
     }
 };
 
-/**
- * @function deleteUser
- * @description Deletes a user by ID.
- * @param {object} req - Express request object.
- * @param {object} res - Express response object.
- * @param {function} next - Express next middleware function.
- */
+// delete user by ID
 userController.deleteUser = async (req, res, next) => {
     const userId = req.params.id; // Get user ID from URL parameters
     try {
@@ -192,10 +154,28 @@ userController.deleteUser = async (req, res, next) => {
             return res.status(404).json({ message: 'User not found.' });
         }
 
-        res.status(200).json({ message: 'User deleted successfully!' });
+        return res.status(200).json({ message: 'User deleted successfully!' });
     } catch (error) {
-        next(error);
+        return next(error);
     }
+};
+
+// Login using local strategy
+userController.loginLocal = (req, res, next) => {
+    const { email, password } = req.body;
+
+    return passport.authenticate('local', (err, user, info) => {
+        if (err) return next(err);
+        if (!user)
+            return res
+                .status(401)
+                .json({ message: info?.message || 'Unauthorized' });
+
+        req.logIn(user, (err) => {
+            if (err) return next(err);
+            return res.status(200).json({ message: 'Login successful', user });
+        });
+    })(req, res, next); // Agora a função retorna sempre
 };
 
 module.exports = userController;

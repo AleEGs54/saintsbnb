@@ -1,8 +1,8 @@
 // utilities/validation.js
 const { body, validationResult } = require('express-validator');
 
-// Validation rules for user creation/update
-const usersValidationRules = [
+// Validation rules for user creation/update (restricted for clients)
+const registrationValidationRules = [
     body('name')
         .trim()
         .isLength({ min: 1 })
@@ -30,7 +30,41 @@ const usersValidationRules = [
         .withMessage('A valid phone number is required.'),
     body('role')
         .trim()
-        .isIn(['guest', 'host', 'admin'])
+        .isIn(['guest', 'host']) // Only allow guest or host roles for clients creation
+        .withMessage('Role must be guest, host, or admin.')
+        .toLowerCase(),
+];
+
+// Validation rules for admin user creation (allows any role)
+const adminUserValidationRules = [
+    body('name')
+        .trim()
+        .isLength({ min: 1 })
+        .withMessage('Name is required.')
+        .matches(/^[a-zA-Z\s]+$/)
+        .withMessage('Name must contain only letters and spaces.'),
+    body('email')
+        .trim()
+        .isEmail()
+        .withMessage('A valid email is required.')
+        .normalizeEmail(),
+    body('password')
+        .optional()
+        .isLength({ min: 8 })
+        .withMessage('Password must be at least 8 characters long.')
+        .matches(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()])[A-Za-z\d!@#$%^&*()]{8,}$/,
+        )
+        .withMessage(
+            'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
+        ),
+    body('phone')
+        .optional()
+        .isMobilePhone('any')
+        .withMessage('A valid phone number is required.'),
+    body('role')
+        .trim()
+        .isIn(['guest', 'host', 'admin']) // Allow creation of users with any role
         .withMessage('Role must be guest, host, or admin.')
         .toLowerCase(),
 ];
@@ -114,7 +148,8 @@ const housingValidationRules = [
 ];
 
 module.exports = {
-    usersValidationRules,
+    registrationValidationRules,
+    adminUserValidationRules,
     loginValidationRules,
     housingValidationRules,
     validate,

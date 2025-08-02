@@ -2,17 +2,26 @@ const router = require('express').Router();
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('../swagger-output.json');
 
-//swagger route.
+// swagger route.
 router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// Import and use user routes
-router.use('/users', require('./userRoutes')); // All routes in userRoutes will be prefixed with /users
+// user routes
+router.use(
+    //#swagger.tags = ['Users'];
+    '/users',
+    require('./userRoutes'),
+); // All routes in userRoutes will be prefixed with /users
 
-// Import and use housing routes
-router.use('/housing', require('./housingRoutes')); // All routes in housingRoutes will be prefixed with /housing
+// housing routes
+router.use(
+    //#swagger.tags = ['Housing'];
+    '/housing',
+    require('./housingRoutes'),
+); // All routes in housingRoutes will be prefixed with /housing
 
-// You might want a root route (e.g., for API status or home)
+// home page route
 router.get('/', (req, res) => {
+    //#swagger.tags = ['Home Page'];
     res.send('Welcome to SaintsBnB API!');
 });
 

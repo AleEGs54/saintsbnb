@@ -1,15 +1,8 @@
 // controllers/housingController.js
 const HousingModel = require('../models/housingModel');
-
 const housingController = {};
 
-/**
- * @function createHousing
- * @description Creates a new housing post.
- * @param {object} req - Express request object. Expects 'rooms', 'price', 'address', 'maxOccupants', 'user_id' in body.
- * @param {object} res - Express response object.
- * @param {function} next - Express next middleware function.
- */
+// create a new housing post
 housingController.createHousing = async (req, res, next) => {
     try {
         if (!req.user || !req.user._id) {
@@ -18,8 +11,28 @@ housingController.createHousing = async (req, res, next) => {
             });
         }
 
-        const housingData = req.body;
-        housingData.user_id = req.user._id;
+        const {
+            rooms,
+            availability,
+            price,
+            address,
+            maxOccupants,
+            features,
+            description,
+            images,
+        } = req.body;
+
+        const housingData = {
+            rooms,
+            availability,
+            price,
+            address,
+            maxOccupants,
+            features,
+            description,
+            images,
+            user_id: req.user._id,
+        };
 
         const newHousing = new HousingModel(housingData);
         await newHousing.save();
@@ -34,18 +47,11 @@ housingController.createHousing = async (req, res, next) => {
                 .status(400)
                 .json({ message: error.message, errors: error.errors });
         }
-        // Always return next(error) to explicitly end execution in the try-catch block
         return next(error);
     }
 };
 
-/**
- * @function getAllHousing
- * @description Retrieves all housing posts.
- * @param {object} req - Express request object.
- * @param {object} res - Express response object.
- * @param {function} next - Express next middleware function.
- */
+// get all housing posts
 housingController.getAllHousing = async (req, res, next) => {
     try {
         const housingPosts = await HousingModel.find({}).populate(
@@ -58,13 +64,7 @@ housingController.getAllHousing = async (req, res, next) => {
     }
 };
 
-/**
- * @function getHousingById
- * @description Retrieves a single housing post by ID.
- * @param {object} req - Express request object.
- * @param {object} res - Express response object.
- * @param {function} next - Express next middleware function.
- */
+// get housing post by ID
 housingController.getHousingById = async (req, res, next) => {
     try {
         const housingId = req.params.id;
@@ -83,13 +83,7 @@ housingController.getHousingById = async (req, res, next) => {
     }
 };
 
-/**
- * @function updateHousing
- * @description Updates an existing housing post by ID. Only the owner can update.
- * @param {object} req - Express request object.
- * @param {object} res - Express response object.
- * @param {function} next - Express next middleware function.
- */
+// update an existing housing post by ID
 housingController.updateHousing = async (req, res, next) => {
     try {
         if (!req.user || !req.user._id) {
@@ -99,7 +93,16 @@ housingController.updateHousing = async (req, res, next) => {
         }
 
         const housingId = req.params.id;
-        const updateData = req.body;
+        const {
+            rooms,
+            availability,
+            price,
+            address,
+            maxOccupants,
+            features,
+            description,
+            images,
+        } = req.body;
 
         const housing = await HousingModel.findById(housingId);
 
@@ -115,10 +118,16 @@ housingController.updateHousing = async (req, res, next) => {
             });
         }
 
-        // Prevent direct modification of user_id through updateData
-        if (updateData.user_id) {
-            delete updateData.user_id;
-        }
+        const updateData = {
+            rooms,
+            availability,
+            price,
+            address,
+            maxOccupants,
+            features,
+            description,
+            images,
+        };
 
         const updatedHousing = await HousingModel.findByIdAndUpdate(
             housingId,
@@ -140,13 +149,7 @@ housingController.updateHousing = async (req, res, next) => {
     }
 };
 
-/**
- * @function deleteHousing
- * @description Deletes a housing post by ID. Only the owner can delete.
- * @param {object} req - Express request object.
- * @param {object} res - Express response object.
- * @param {function} next - Express next middleware function.
- */
+// delete a housing post by ID
 housingController.deleteHousing = async (req, res, next) => {
     try {
         if (!req.user || !req.user._id) {
