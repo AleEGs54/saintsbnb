@@ -6,7 +6,7 @@ const doc = {
         description:
             'Api for SaintsBnB to display endpoints available and ready for consumption',
     },
-    host: 'localhost:3000',
+    host: 'saintsbnb.onrender.com',
 };
 
 const outputFile = './swagger-output.json';
