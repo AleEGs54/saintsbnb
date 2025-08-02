@@ -11,6 +11,19 @@
     "http"
   ],
   "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "Home"
+        ],
+        "description": "Home page endpoint",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/posts/": {
       "get": {
         "description": "",
