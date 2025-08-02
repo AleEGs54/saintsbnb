@@ -7,30 +7,39 @@
     "swagger": "node ./swagger.js",
     "lint": "eslint .",
     "fix": "eslint --fix",
-    
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "The SaintsBnB API will focus on helping saints to find Airbnbs located close to the temple. This API will target traveling saints who will need a place to stay when visiting temples around the world. Saints will also be able to create postings for their Airbnbs so others can rent them out and be able to stay closer to temples. Allowing users to stay spiritually and physically closer to temples.",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "express-session": "^1.18.2",
-    "mongoose": "^8.16.5",
+    "mongoose": "^8.17.0",
     "passport": "^0.7.0",
     "swagger-autogen": "^2.23.7",
+    "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10",
     "@eslint/js": "^9.31.0",
     "eslint": "^9.31.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-define-config": "^2.1.0",
     "eslint-plugin-prettier": "^5.5.1",
     "globals": "^16.3.0",
+    "nodemon": "^3.1.10",
     "prettier": "^3.6.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AleEGs54/saintsbnb.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/AleEGs54/saintsbnb/issues"
+  },
+  "homepage": "https://github.com/AleEGs54/saintsbnb#readme"
 }

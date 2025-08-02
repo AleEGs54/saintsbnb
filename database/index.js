@@ -1,4 +1,5 @@
 // models/db.js
+// This file is used to connect to the MongoDB database using Mongoose.
 const mongoose = require('mongoose');
 require('dotenv').config();
 
@@ -15,4 +16,4 @@ async function connectDB() {
     }
 }
 
-module.exports = connectDB;
+module.exports = { connectDB };
