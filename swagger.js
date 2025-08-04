@@ -1,5 +1,6 @@
 const swaggerAutogen = require('swagger-autogen')();
 
+
 const doc = {
     info: {
         title: 'SaintsBnB API',
@@ -7,6 +8,8 @@ const doc = {
             'Api for SaintsBnB to display endpoints available and ready for consumption',
     },
     host: 'saintsbnb.onrender.com',
+    basePath: '/',
+    schemes: ['https'],
 };
 
 const outputFile = './swagger-output.json';
