@@ -8,7 +8,7 @@
   "host": "saintsbnb.onrender.com",
   "basePath": "/",
   "schemes": [
-    "https"
+    "http"
   ],
   "paths": {
     "/": {
@@ -26,6 +26,9 @@
     },
     "/posts/": {
       "get": {
+        "tags": [
+          "Posts"
+        ],
         "description": "",
         "responses": {
           "200": {
@@ -40,6 +43,9 @@
         }
       },
       "post": {
+        "tags": [
+          "Posts"
+        ],
         "description": "",
         "parameters": [
           {
@@ -49,28 +55,28 @@
               "type": "object",
               "properties": {
                 "user_id": {
-                  "example": "object_id"
+                  "example": "any"
                 },
                 "rooms": {
-                  "example": "number"
+                  "example": "any"
                 },
                 "availability": {
-                  "example": "string"
+                  "example": "any"
                 },
                 "owner": {
-                  "example": "string"
+                  "example": "any"
                 },
                 "price": {
-                  "example": "string"
+                  "example": "any"
                 },
                 "address": {
-                  "example": "string"
+                  "example": "any"
                 },
                 "max_occupants": {
-                  "example": "number"
+                  "example": "any"
                 },
                 "location": {
-                  "example": "string"
+                  "example": "any"
                 }
               }
             }
@@ -88,6 +94,9 @@
     },
     "/posts/{id}": {
       "get": {
+        "tags": [
+          "Posts"
+        ],
         "description": "",
         "parameters": [
           {
@@ -110,6 +119,9 @@
         }
       },
       "put": {
+        "tags": [
+          "Posts"
+        ],
         "description": "",
         "parameters": [
           {
@@ -125,28 +137,28 @@
               "type": "object",
               "properties": {
                 "user_id": {
-                  "example": "object_id"
+                  "example": "any"
                 },
                 "rooms": {
-                  "example": "number"
+                  "example": "any"
                 },
                 "availability": {
-                  "example": "string"
+                  "example": "any"
                 },
                 "owner": {
-                  "example": "string"
+                  "example": "any"
                 },
                 "price": {
-                  "example": "string"
+                  "example": "any"
                 },
                 "address": {
-                  "example": "string"
+                  "example": "any"
                 },
                 "max_occupants": {
-                  "example": "number"
+                  "example": "any"
                 },
                 "location": {
-                  "example": "string"
+                  "example": "any"
                 }
               }
             }
@@ -165,6 +177,9 @@
         }
       },
       "delete": {
+        "tags": [
+          "Posts"
+        ],
         "description": "",
         "parameters": [
           {
@@ -189,6 +204,9 @@
     },
     "/posts/location/{location}": {
       "get": {
+        "tags": [
+          "Posts"
+        ],
         "description": "",
         "parameters": [
           {
@@ -213,6 +231,9 @@
     },
     "/reservations/": {
       "get": {
+        "tags": [
+          "Reservations"
+        ],
         "description": "",
         "responses": {
           "200": {
@@ -227,6 +248,9 @@
         }
       },
       "post": {
+        "tags": [
+          "Reservations"
+        ],
         "description": "",
         "parameters": [
           {
@@ -236,22 +260,22 @@
               "type": "object",
               "properties": {
                 "post_id": {
-                  "example": "object_id"
+                  "example": "any"
                 },
                 "user_id": {
-                  "example": "object_id"
+                  "example": "any"
                 },
                 "check_in_date": {
-                  "example": "date(yy-mm-dd)"
+                  "example": "any"
                 },
                 "check_out_date": {
-                  "example": "date(yy-mm-dd)"
+                  "example": "any"
                 },
                 "status": {
-                  "example": "string"
+                  "example": "any"
                 },
                 "total_price": {
-                  "example": "string"
+                  "example": "any"
                 }
               }
             }
@@ -269,6 +293,9 @@
     },
     "/reservations/{id}": {
       "get": {
+        "tags": [
+          "Reservations"
+        ],
         "description": "",
         "parameters": [
           {
@@ -291,6 +318,9 @@
         }
       },
       "put": {
+        "tags": [
+          "Reservations"
+        ],
         "description": "",
         "parameters": [
           {
@@ -306,22 +336,22 @@
               "type": "object",
               "properties": {
                 "post_id": {
-                  "example": "object_id"
+                  "example": "any"
                 },
                 "user_id": {
-                  "example": "object_id"
+                  "example": "any"
                 },
                 "check_in_date": {
-                  "example": "date(yy-mm-dd)"
+                  "example": "any"
                 },
                 "check_out_date": {
-                  "example": "date(yy-mm-dd)"
+                  "example": "any"
                 },
                 "status": {
-                  "example": "string"
+                  "example": "any"
                 },
                 "total_price": {
-                  "example": "string"
+                  "example": "any"
                 }
               }
             }
@@ -340,6 +370,9 @@
         }
       },
       "delete": {
+        "tags": [
+          "Reservations"
+        ],
         "description": "",
         "parameters": [
           {
