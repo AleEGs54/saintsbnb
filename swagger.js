@@ -1,6 +1,8 @@
 const swaggerAutogen = require('swagger-autogen')({ openapi: '3.0.0' });
 require('dotenv').config();
 const port = process.env.PORT;
+const site = process.env.SITE;
+
 
 const doc = {
     info: {
@@ -8,7 +10,7 @@ const doc = {
         description:
             'API for SaintsBnB to display endpoints available and ready for consumption',
     },
-    host: `localhost:${port}`,
+    host: `${site}${port}`,
     schemes: ['http', 'https'],
     consumes: ['application/json'],
     produces: ['application/json'],
