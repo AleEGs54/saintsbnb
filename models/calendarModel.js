@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 /**
  * @typedef Calendar
- * @property {ObjectId} post_id.required - ID do imóvel (housing)
- * @property {Date} date.required - Data específica
- * @property {boolean} available.required - Se o imóvel está disponível nessa data
+ * @property {ObjectId} post_id.required - ID of housing
+ * @property {Date} date.required - Specific date for the calendar entry
+ * @property {boolean} available.required - Indicates if the date is available for booking
  */
 const calendarSchema = new mongoose.Schema(
     {

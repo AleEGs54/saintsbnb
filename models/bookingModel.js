@@ -2,12 +2,12 @@ const mongoose = require('mongoose');
 
 /**
  * @typedef Booking
- * @property {ObjectId} post_id.required - ID do imóvel (housing) reservado
- * @property {ObjectId} user_id.required - ID do usuário que fez a reserva
- * @property {Date} check_in_date.required - Data de entrada
- * @property {Date} check_out_date.required - Data de saída
- * @property {string} status.required.enum - Status da reserva (confirmed, cancelled, pending, concluded)
- * @property {number} total_price.required - Preço total da reserva
+ * @property {ObjectId} post_id.required - ID of housing
+ * @property {ObjectId} user_id.required - ID of user making the booking
+ * @property {Date} check_in_date.required - Check-in date
+ * @property {Date} check_out_date.required - Check-out date
+ * @property {string} status.required.enum - Status of the booking (pending, confirmed, cancelled, concluded)
+ * @property {number} total_price.required - Total price for the booking
  */
 const bookingSchema = new mongoose.Schema(
     {
