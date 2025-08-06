@@ -4,22 +4,22 @@ const bookingController = require('../controllers/bookingController');
 const { bookingValidationRules, validate } = require('../utilities/validation');
 const { isAuthenticated } = require('../auth/authenticate');
 
-// Criar reserva
+// Create a new booking
 router.post('/', isAuthenticated, bookingValidationRules, validate, bookingController.createBooking);
 
-// Obter reserva por ID
+// Get a booking by its ID
 router.get('/:id', isAuthenticated, bookingController.getBookingById);
 
-// Obter reservas por usuário
+// Get all bookings for a specific user
 router.get('/user/:userId', isAuthenticated, bookingController.getBookingsByUser);
 
-// Obter reservas por imóvel
+// Get all bookings for a specific housing post
 router.get('/post/:postId', isAuthenticated, bookingController.getBookingsByPost);
 
-// Atualizar reserva
+// Update a booking by ID
 router.put('/:id', isAuthenticated, bookingValidationRules, validate, bookingController.updateBooking);
 
-// Deletar reserva
+// Delete (cancel) a booking by ID
 router.delete('/:id', isAuthenticated, bookingController.deleteBooking);
 
 module.exports = router;
