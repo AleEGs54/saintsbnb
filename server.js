@@ -26,7 +26,7 @@ app.use(
         saveUninitialized: false, // Don't create session until something stored
         store: MongoStore.create({ // Configuration of sessions with MongoDB
             mongoUrl: process.env.MONGODB_URI, 
-            ttl: 1000 * 60 * 60 * 24 * 7,
+            ttl: 60 * 60 * 24 * 7,
             autoRemove: 'interval', 
             autoRemoveInterval: 10, 
         }),

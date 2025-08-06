@@ -31,7 +31,7 @@ const registrationValidationRules = [
     body('role')
         .trim()
         .isIn(['guest', 'host']) // Only allow guest or host roles for clients creation
-        .withMessage('Role must be guest, host, or admin.')
+        .withMessage('Role must be guest or host.')
         .toLowerCase(),
 ];
 

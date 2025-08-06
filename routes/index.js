@@ -25,4 +25,18 @@ router.get('/', (req, res) => {
     res.send('Welcome to SaintsBnB API!');
 });
 
+// booking routes
+router.use(
+    //#swagger.tags = ['Booking'];
+    '/booking',
+    require('./bookingRoutes'),
+); // All routes in bookingRoutes will be prefixed with /booking
+
+// calendar routes
+router.use(
+    //#swagger.tags = ['Users'];
+    '/calendar',
+    require('./calendarRoutes'),
+); // All routes in calendarRoutes will be prefixed with /calendar
+
 module.exports = router;

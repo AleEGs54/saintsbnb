@@ -36,8 +36,8 @@ const doc = {
             description: 'Operations related to bookings',
         },
         {
-            name: 'Session',
-            description: 'Operations related to session',
+            name: 'Calendar',
+            description: 'Operations related to calendar',
         },
     ],
     components: {
