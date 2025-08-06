@@ -147,10 +147,54 @@ const housingValidationRules = [
         ),
 ];
 
+const bookingValidationRules = [
+    body('post_id')
+        .notEmpty()
+        .withMessage('Housing ID is required.')
+        .isMongoId()
+        .withMessage('Housing ID must be a valid Mongo ID.'),
+    body('user_id')
+        .notEmpty()
+        .withMessage('User ID is required.')
+        .isMongoId()
+        .withMessage('User ID must be a valid Mongo ID.'),
+    body('check_in_date')
+        .isISO8601()
+        .withMessage('Check-in date must be a valid date.'),
+    body('check_out_date')
+        .isISO8601()
+        .withMessage('Check-out date must be a valid date.'),
+    body('status')
+        .optional()
+        .isIn(['pending', 'confirmed', 'cancelled', 'concluded'])
+        .withMessage('Status must be pending, confirmed, cancelled, or concluded.'),
+    body('total_price')
+        .isFloat({ min: 0 })
+        .withMessage('Total price must be a positive number.'),
+];
+
+const calendarValidationRules = [
+    body('post_id')
+        .notEmpty()
+        .withMessage('Housing ID is required.')
+        .isMongoId()
+        .withMessage('Housing ID must be a valid Mongo ID.'),
+    body('date')
+        .notEmpty()
+        .withMessage('Date is required.')
+        .isISO8601()
+        .withMessage('Date must be a valid date.'),
+    body('available')
+        .isBoolean()
+        .withMessage('Availability must be true or false.'),
+];
+
 module.exports = {
     registrationValidationRules,
     adminUserValidationRules,
     loginValidationRules,
     housingValidationRules,
     validate,
+    bookingValidationRules,
+    calendarValidationRules,
 };
