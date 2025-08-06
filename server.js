@@ -7,6 +7,7 @@ const port = process.env.PORT;
 
 // Import session and passport config
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const passportConfig = require('./auth/passport');
 const flash = require('connect-flash');
 
@@ -23,9 +24,16 @@ app.use(
             'a_very_strong_and_random_secret_key_for_sessions', // Use a strong, unique secret from your .env
         resave: false, // Don't save session if unmodified
         saveUninitialized: false, // Don't create session until something stored
+        store: MongoStore.create({ // Configuration of sessions with MongoDB
+            mongoUrl: process.env.MONGODB_URI, 
+            ttl: 1000 * 60 * 60 * 24 * 7,
+            autoRemove: 'interval', 
+            autoRemoveInterval: 10, 
+        }),
         cookie: {
             maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
             secure: process.env.NODE_ENV === 'production', // Use secure cookies in production (HTTPS)
+            sameSite: 'Lax',
         },
         proxy: true, // Trust the reverse proxy (e.g., Heroku, Render)
     }),
