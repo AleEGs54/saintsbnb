@@ -27,7 +27,7 @@ app.use(
             maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
             secure: process.env.NODE_ENV === 'production', // Use secure cookies in production (HTTPS)
         },
-        Proxy: true, // Trust the reverse proxy (e.g., Heroku, Render)
+        proxy: true, // Trust the reverse proxy (e.g., Heroku, Render)
     }),
 );
 
