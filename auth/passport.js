@@ -1,5 +1,7 @@
+// auth/passport.js
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+// const OAuth2Strategy = require('passport-oauth2').Strategy; // Example for a generic OAuth2 strategy, if needed later
 const User = require('../models/userModel');
 require('dotenv').config();
 
@@ -12,17 +14,12 @@ module.exports = (app) => {
     });
 
     passport.deserializeUser(async (id, done) => {
-        console.log('--- Deserializing user ---'); // ✨ DEBUG LOG
-        console.log('Session ID:', id); // ✨ DEBUG LOG
         try {
             const user = await User.findById(id);
-            console.log('User found (deserialize):', user); // ✨ DEBUG LOG
             done(null, user);
         } catch (err) {
-            console.error('Error during deserialization:', err); // ✨ DEBUG LOG
             done(err, null);
         }
-        console.log('--- End of deserialization ---'); // ✨ DEBUG LOG
     });
 
     // --- Passport Local Strategy (for email/password login) ---
