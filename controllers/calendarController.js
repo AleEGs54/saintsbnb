@@ -21,9 +21,15 @@ exports.getCalendarByPost = async (req, res, next) => {
 
 exports.updateCalendarEntry = async (req, res, next) => {
     try {
-        const updated = await Calendar.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const updated = await Calendar.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true },
+        );
         if (!updated) {
-            return res.status(404).json({ message: 'Calendar entry not found' });
+            return res
+                .status(404)
+                .json({ message: 'Calendar entry not found' });
         }
         res.status(200).json(updated);
     } catch (err) {
@@ -35,7 +41,9 @@ exports.deleteCalendarEntry = async (req, res, next) => {
     try {
         const deleted = await Calendar.findByIdAndDelete(req.params.id);
         if (!deleted) {
-            return res.status(404).json({ message: 'Calendar entry not found' });
+            return res
+                .status(404)
+                .json({ message: 'Calendar entry not found' });
         }
         res.status(200).json({ message: 'Calendar entry deleted' });
     } catch (err) {

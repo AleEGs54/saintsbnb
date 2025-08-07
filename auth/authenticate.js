@@ -5,7 +5,9 @@ const isAuthenticated = (req, res, next) => {
         return next(); // User is authenticated, proceed to the next middleware/route handler
     }
     // If not authenticated, send a 401 Unauthorized response
-    return res.status(401).json({ message: "Unauthorized: You must be logged in to access this resource." });
+    return res.status(401).json({
+        message: 'Unauthorized: You must be logged in to access this resource.',
+    });
 };
 
 module.exports = { isAuthenticated };

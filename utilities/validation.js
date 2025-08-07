@@ -167,7 +167,9 @@ const bookingValidationRules = [
     body('status')
         .optional()
         .isIn(['pending', 'confirmed', 'cancelled', 'concluded'])
-        .withMessage('Status must be pending, confirmed, cancelled, or concluded.'),
+        .withMessage(
+            'Status must be pending, confirmed, cancelled, or concluded.',
+        ),
     body('total_price')
         .isFloat({ min: 0 })
         .withMessage('Total price must be a positive number.'),

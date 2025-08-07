@@ -3,7 +3,6 @@ require('dotenv').config();
 const port = process.env.PORT;
 const site = process.env.SITE;
 
-
 const doc = {
     info: {
         title: 'SaintsBnB API',

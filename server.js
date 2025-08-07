@@ -24,11 +24,12 @@ app.use(
             'a_very_strong_and_random_secret_key_for_sessions', // Use a strong, unique secret from your .env
         resave: false, // Don't save session if unmodified
         saveUninitialized: false, // Don't create session until something stored
-        store: MongoStore.create({ // Configuration of sessions with MongoDB
-            mongoUrl: process.env.MONGODB_URI, 
+        store: MongoStore.create({
+            // Configuration of sessions with MongoDB
+            mongoUrl: process.env.MONGODB_URI,
             ttl: 60 * 60 * 24 * 7,
-            autoRemove: 'interval', 
-            autoRemoveInterval: 10, 
+            autoRemove: 'interval',
+            autoRemoveInterval: 10,
         }),
         cookie: {
             maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
