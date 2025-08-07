@@ -4,16 +4,17 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 async function connectDB() {
-    try {
-        await mongoose.connect(process.env.MONGODB_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
-        console.log('✅ Connected to MongoDB Atlas');
-    } catch (error) {
-        console.error('❌ Failed to connect to MongoDB:', error.message);
-        process.exit(1);
-    }
+    if (process.env.NODE_ENV !== 'test') {
+  mongoose.connect(process.env.MONGODB_URI)
+    .then(() => console.log('✅ Connected to MongoDB Atlas'))
+    .catch(err => {
+      console.error('❌ Failed to connect to MongoDB:', err.message);
+      process.exit(1);
+    });
 }
+}
+
+
+
 
 module.exports = { connectDB };
