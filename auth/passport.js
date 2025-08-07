@@ -65,6 +65,7 @@ module.exports = (app) => {
                     clientSecret: process.env.AUTH0_CLIENT_SECRET,
                     callbackURL: process.env.AUTH0_CALLBACK_URL,
                 },
+scope: [ 'user:email'];
                 async (accessToken, refreshToken, profile, done) => {
                     try {
                         let user = await User.findOne({ auth0Id: profile.id });
