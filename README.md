@@ -87,3 +87,4 @@ Kindly share the variables so we all can use them.
 
 To use the google login, you will have to hit this endpoint: /auth/google
 To log out: /auth/logout
+It's still a little broken, I'm working on it
