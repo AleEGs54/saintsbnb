@@ -105,9 +105,36 @@ housingController.updateHousing = async (req, res, next) => {
             });
         }
 
+        const {
+            rooms,
+            availability,
+            price,
+            address,
+            maxOccupants,
+            features,
+            description,
+            images,
+        } = req.body;
         const updatedHousing = await Housing.findByIdAndUpdate(
-            req.params.id,
-            req.body,
+            req.params.id, 
+
+
+
+
+
+
+
+            
+            {
+                rooms,
+                availability,
+                price,
+                address,
+                maxOccupants,
+                features,
+                description,
+                images,
+            },
             { new: true, runValidators: true },
         ).populate('userId', 'name email');
 
