@@ -35,7 +35,7 @@ exports.getBookingsByUser = async (req, res, next) => {
     }
 };
 
-exports.getBookingsByPost = async (req, res, next) => {
+exports.getBookingsByHousing = async (req, res, next) => {
     try {
         const bookings = await Booking.find({
             post_id: req.params.postId,
