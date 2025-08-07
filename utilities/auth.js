@@ -1,5 +1,3 @@
-
-
 const { validationResult } = require('express-validator');
 
 const handleValidation = (req, res, next) => {
@@ -11,10 +9,14 @@ const handleValidation = (req, res, next) => {
 };
 
 const isAuthenticated = (req, res, next) => {
-  if (req.session.user === undefined) {
-    return res.status(401).json({ message: 'Unauthorized' });
+  
+  if (!req.session.user) {
+    return res.status(401).json({ 
+      message: 'Unauthorized - Please log in with Google first',
+      loginUrl: '/auth/google'
+    });
   } 
-  console.log("User is authenticated:", req.session.user);
+  
   next();
 };
 

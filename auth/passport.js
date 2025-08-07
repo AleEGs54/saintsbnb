@@ -21,7 +21,7 @@ module.exports = function(passport) {
           isCustomer: true,
             createdAt: new Date()
         };
-        console.log('Email:', profile.emails?.[0]?.value);
+       
 
         try {
           let user = await User.findOne({ googleId: profile.id })

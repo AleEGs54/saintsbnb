@@ -35,13 +35,7 @@ app.get("/", (req, res) => {
   res.send(req.session.user !== undefined ? `Logged in as ${req.session.user.username || req.session.user.displayName}` : "Not logged in"); 
 });
 
-app.get("/auth/google/callback", 
-  passport.authenticate("google", { failureRedirect: "/login" }),
-  (req, res) => {
-    req.session.user = req.user;  // 🎯 THIS IS THE CRUCIAL MISSING PIECE
-    res.redirect("/");
-  }
-);
+
 // Auth Route FIRST to ensure /auth/... paths are handled
 app.use('/auth', require('./routes/auth'));
 
