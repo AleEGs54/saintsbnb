@@ -2,7 +2,9 @@ const Calendar = require('../models/calendarModel');
 
 exports.createCalendarEntry = async (req, res, next) => {
     try {
-        const entry = new Calendar(req.body);
+        const { post_id, start_date, end_date } = req.body;
+        const entryData = { post_id, start_date, end_date };
+        const entry = new Calendar(entryData);
         const saved = await entry.save();
         return res.status(201).json(saved);
     } catch (err) {
@@ -21,10 +23,18 @@ exports.getCalendarByHousing = async (req, res, next) => {
 
 exports.updateCalendarEntry = async (req, res, next) => {
     try {
+        const updateData = {};
+        const allowedFields = ['start_date', 'end_date'];
+
+        allowedFields.forEach((field) => {
+            if (req.body[field] !== undefined) {
+                updateData[field] = req.body[field];
+            }
+        });
         const updated = await Calendar.findByIdAndUpdate(
             req.params.id,
-            req.body,
-            { new: true },
+            updateData,
+            { new: true, runValidators: true },
         );
         if (!updated) {
             return res

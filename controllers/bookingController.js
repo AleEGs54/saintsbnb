@@ -48,10 +48,24 @@ exports.getBookingsByHousing = async (req, res, next) => {
 
 exports.updateBooking = async (req, res, next) => {
     try {
+        const updateData = {};
+
+        const allowedFields = [
+            'status',
+            'start_date',
+            'end_date',
+            'total_price',
+        ];
+
+        allowedFields.forEach((field) => {
+            if (req.body[field] !== undefined) {
+                updateData[field] = req.body[field];
+            }
+        });
         const updated = await Booking.findByIdAndUpdate(
             req.params.id,
-            req.body,
-            { new: true },
+            updateData,
+            { new: true, runValidators: true },
         );
         if (!updated) {
             return res.status(404).json({ message: 'Booking not found' });
