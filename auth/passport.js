@@ -1,7 +1,6 @@
-// auth/passport.js
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const Auth0Strategy = require('passport-auth0');
+const GithubStrategy = require('passport-github2').Strategy;
 const User = require('../models/userModel');
 require('dotenv').config();
 
@@ -57,23 +56,16 @@ module.exports = (app) => {
         ),
     );
 
-    // --- Auth0 Strategy (for GitHub login) ---
+    // --- Github Strategy (for social login) ---
     if (process.env.AUTH0_CLIENT_ID && process.env.AUTH0_CLIENT_SECRET) {
         passport.use(
-            new Auth0Strategy(
+            new GithubStrategy( // Troquei Auth0Strategy por GithubStrategy
                 {
-                    domain: process.env.AUTH0_DOMAIN,
                     clientID: process.env.AUTH0_CLIENT_ID,
                     clientSecret: process.env.AUTH0_CLIENT_SECRET,
                     callbackURL: process.env.AUTH0_CALLBACK_URL,
                 },
-                async (
-                    accessToken,
-                    refreshToken,
-                    extraParams,
-                    profile,
-                    done,
-                ) => {
+                async (accessToken, refreshToken, profile, done) => {
                     try {
                         let user = await User.findOne({ auth0Id: profile.id });
 
@@ -82,7 +74,7 @@ module.exports = (app) => {
                         } else {
                             user = new User({
                                 auth0Id: profile.id,
-                                name: profile.displayName || profile.nickname,
+                                name: profile.displayName || profile.username, // Usei 'username' como fallback para 'name'
                                 email:
                                     profile.emails && profile.emails.length > 0
                                         ? profile.emails[0].value
@@ -100,7 +92,7 @@ module.exports = (app) => {
         );
     } else {
         console.warn(
-            'Auth0 credentials not found in .env. GitHub login will not be available until configured.',
+            'Github credentials not found in .env. Github login will not be available until configured.',
         );
     }
 };
