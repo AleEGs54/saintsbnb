@@ -21,14 +21,14 @@ require('dotenv').config();
 router.get(
     /* #swagger.ignore = true */
     '/auth/github',
-    passport.authenticate('auth0', { scope: 'openid email profile' }),
+    passport.authenticate('github', { scope: 'openid email profile' }),
 );
 
 // OAuth Callback Route
 router.get(
     /* #swagger.ignore = true */
     '/auth/github/callback',
-    passport.authenticate('auth0', {
+    passport.authenticate('github', {
         failureRedirect: '/users/login',
         successRedirect: '/users/dashboard',
     }),
