@@ -10,9 +10,9 @@ exports.createCalendarEntry = async (req, res, next) => {
     }
 };
 
-exports.getCalendarByPost = async (req, res, next) => {
+exports.getCalendarByHousing = async (req, res, next) => {
     try {
-        const entries = await Calendar.find({ post_id: req.params.postId });
+        const entries = await Calendar.find({ post_id: req.params.housingId });
         return res.status(200).json(entries);
     } catch (err) {
         return next(err);

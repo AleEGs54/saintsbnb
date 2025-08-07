@@ -38,7 +38,7 @@ exports.getBookingsByUser = async (req, res, next) => {
 exports.getBookingsByHousing = async (req, res, next) => {
     try {
         const bookings = await Booking.find({
-            post_id: req.params.postId,
+            post_id: req.params.housingId,
         }).populate('user_id');
         return res.status(200).json(bookings);
     } catch (err) {
