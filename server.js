@@ -77,3 +77,5 @@ connectDB()
     console.error("❌ Failed to connect to database:", err);
   });
 
+  module.exports = { app }; // Export the app for testing purposes
+
