@@ -24,31 +24,12 @@
         }
       }
     },
-    "/logoutscreen": {
-      "get": {
-        "tags": [
-          "Home"
-        ],
-        "description": "Home page endpoint",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/posts/": {
       "get": {
-        "tags": [
-          "Posts"
-        ],
         "description": "",
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
           },
           "404": {
             "description": "Not Found"
@@ -59,9 +40,6 @@
         }
       },
       "post": {
-        "tags": [
-          "Posts"
-        ],
         "description": "",
         "parameters": [
           {
@@ -71,28 +49,28 @@
               "type": "object",
               "properties": {
                 "user_id": {
-                  "example": "any"
+                  "example": "object_id"
                 },
                 "rooms": {
-                  "example": "any"
+                  "example": "number"
                 },
                 "availability": {
-                  "example": "any"
+                  "example": "string"
                 },
                 "owner": {
-                  "example": "any"
+                  "example": "string"
                 },
                 "price": {
-                  "example": "any"
+                  "example": "string"
                 },
                 "address": {
-                  "example": "any"
+                  "example": "string"
                 },
                 "max_occupants": {
-                  "example": "any"
+                  "example": "number"
                 },
                 "location": {
-                  "example": "any"
+                  "example": "string"
                 }
               }
             }
@@ -102,12 +80,6 @@
           "201": {
             "description": "Created"
           },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -116,9 +88,6 @@
     },
     "/posts/{id}": {
       "get": {
-        "tags": [
-          "Posts"
-        ],
         "description": "",
         "parameters": [
           {
@@ -131,9 +100,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
           },
           "404": {
             "description": "Not Found"
@@ -144,9 +110,6 @@
         }
       },
       "put": {
-        "tags": [
-          "Posts"
-        ],
         "description": "",
         "parameters": [
           {
@@ -162,28 +125,28 @@
               "type": "object",
               "properties": {
                 "user_id": {
-                  "example": "any"
+                  "example": "object_id"
                 },
                 "rooms": {
-                  "example": "any"
+                  "example": "number"
                 },
                 "availability": {
-                  "example": "any"
+                  "example": "string"
                 },
                 "owner": {
-                  "example": "any"
+                  "example": "string"
                 },
                 "price": {
-                  "example": "any"
+                  "example": "string"
                 },
                 "address": {
-                  "example": "any"
+                  "example": "string"
                 },
                 "max_occupants": {
-                  "example": "any"
+                  "example": "number"
                 },
                 "location": {
-                  "example": "any"
+                  "example": "string"
                 }
               }
             }
@@ -192,12 +155,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "404": {
             "description": "Not Found"
@@ -208,9 +165,6 @@
         }
       },
       "delete": {
-        "tags": [
-          "Posts"
-        ],
         "description": "",
         "parameters": [
           {
@@ -223,12 +177,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "404": {
             "description": "Not Found"
@@ -241,9 +189,6 @@
     },
     "/posts/location/{location}": {
       "get": {
-        "tags": [
-          "Posts"
-        ],
         "description": "",
         "parameters": [
           {
@@ -257,9 +202,6 @@
           "200": {
             "description": "OK"
           },
-          "400": {
-            "description": "Bad Request"
-          },
           "404": {
             "description": "Not Found"
           },
@@ -271,9 +213,6 @@
     },
     "/reservations/": {
       "get": {
-        "tags": [
-          "Reservations"
-        ],
         "description": "",
         "responses": {
           "200": {
@@ -288,9 +227,6 @@
         }
       },
       "post": {
-        "tags": [
-          "Reservations"
-        ],
         "description": "",
         "parameters": [
           {
@@ -300,22 +236,22 @@
               "type": "object",
               "properties": {
                 "post_id": {
-                  "example": "any"
+                  "example": "object_id"
                 },
                 "user_id": {
-                  "example": "any"
+                  "example": "object_id"
                 },
                 "check_in_date": {
-                  "example": "any"
+                  "example": "date(yy-mm-dd)"
                 },
                 "check_out_date": {
-                  "example": "any"
+                  "example": "date(yy-mm-dd)"
                 },
                 "status": {
-                  "example": "any"
+                  "example": "string"
                 },
                 "total_price": {
-                  "example": "any"
+                  "example": "string"
                 }
               }
             }
@@ -333,9 +269,6 @@
     },
     "/reservations/{id}": {
       "get": {
-        "tags": [
-          "Reservations"
-        ],
         "description": "",
         "parameters": [
           {
@@ -358,9 +291,6 @@
         }
       },
       "put": {
-        "tags": [
-          "Reservations"
-        ],
         "description": "",
         "parameters": [
           {
@@ -376,22 +306,22 @@
               "type": "object",
               "properties": {
                 "post_id": {
-                  "example": "any"
+                  "example": "object_id"
                 },
                 "user_id": {
-                  "example": "any"
+                  "example": "object_id"
                 },
                 "check_in_date": {
-                  "example": "any"
+                  "example": "date(yy-mm-dd)"
                 },
                 "check_out_date": {
-                  "example": "any"
+                  "example": "date(yy-mm-dd)"
                 },
                 "status": {
-                  "example": "any"
+                  "example": "string"
                 },
                 "total_price": {
-                  "example": "any"
+                  "example": "string"
                 }
               }
             }
@@ -410,9 +340,6 @@
         }
       },
       "delete": {
-        "tags": [
-          "Reservations"
-        ],
         "description": "",
         "parameters": [
           {
@@ -431,36 +358,6 @@
           },
           "500": {
             "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/auth/google": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/auth/google/callback": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/auth/logout": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
           }
         }
       }
