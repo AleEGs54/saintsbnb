@@ -48,23 +48,30 @@ exports.getBookingsByHousing = async (req, res, next) => {
 
 exports.updateBooking = async (req, res, next) => {
     try {
-        const updateData = {};
+        if (!req.user || !req.user._id) {
+            return res.status(401).json({
+                message: 'Authentication required to update a booking.',
+            });
+        }
 
-        const allowedFields = [
-            'status',
-            'start_date',
-            'end_date',
-            'total_price',
-        ];
+        const booking = await Booking.findById(req.params.id);
 
-        allowedFields.forEach((field) => {
-            if (req.body[field] !== undefined) {
-                updateData[field] = req.body[field];
-            }
-        });
+        if (!booking) {
+            return res.status(404).json({ message: 'Booking not found' });
+        }
+
+        if (booking.user_id.toString() !== req.user._id.toString()) {
+            return res.status(403).json({
+                message:
+                    'Forbidden: You do not have permission to update this booking.',
+            });
+        }
+
+        const { status, start_date, end_date, total_price } = req.body;
+
         const updated = await Booking.findByIdAndUpdate(
             req.params.id,
-            updateData,
+            { status, start_date, end_date, total_price },
             { new: true, runValidators: true },
         );
         if (!updated) {

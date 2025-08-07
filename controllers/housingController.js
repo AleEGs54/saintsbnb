@@ -82,8 +82,7 @@ housingController.getHousingById = async (req, res, next) => {
     }
 };
 
-// Update housing listing by ID
-housingController.updateHousing = async (req, res, next) => {
+exports.updateHousing = async (req, res, next) => {
     try {
         if (!req.user || !req.user._id) {
             return res.status(401).json({
@@ -106,26 +105,9 @@ housingController.updateHousing = async (req, res, next) => {
             });
         }
 
-        const updateData = {};
-        const allowedFields = [
-            'rooms',
-            'availability',
-            'price',
-            'address',
-            'maxOccupants',
-            'features',
-            'description',
-            'images',
-        ];
-        allowedFields.forEach((field) => {
-            if (req.body[field] !== undefined) {
-                updateData[field] = req.body[field];
-            }
-        });
-
         const updatedHousing = await Housing.findByIdAndUpdate(
             req.params.id,
-            updateData,
+            req.body,
             { new: true, runValidators: true },
         ).populate('userId', 'name email');
 

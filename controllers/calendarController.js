@@ -23,17 +23,39 @@ exports.getCalendarByHousing = async (req, res, next) => {
 
 exports.updateCalendarEntry = async (req, res, next) => {
     try {
-        const updateData = {};
-        const allowedFields = ['start_date', 'end_date'];
+        if (!req.user || !req.user._id) {
+            return res.status(401).json({
+                message: 'Authentication required to update a calendar entry.',
+            });
+        }
 
-        allowedFields.forEach((field) => {
-            if (req.body[field] !== undefined) {
-                updateData[field] = req.body[field];
-            }
-        });
+        const entry = await Calendar.findById(req.params.id);
+
+        if (!entry) {
+            return res
+                .status(404)
+                .json({ message: 'Calendar entry not found' });
+        }
+
+        const housing = await Housing.findById(entry.post_id);
+
+        if (!housing) {
+            return res
+                .status(404)
+                .json({ message: 'Associated housing post not found.' });
+        }
+
+        if (housing.userId.toString() !== req.user._id.toString()) {
+            return res.status(403).json({
+                message:
+                    'Forbidden: You do not have permission to update this calendar entry.',
+            });
+        }
+
+        const { start_date, end_date } = req.body;
         const updated = await Calendar.findByIdAndUpdate(
             req.params.id,
-            updateData,
+            { start_date, end_date },
             { new: true, runValidators: true },
         );
         if (!updated) {
