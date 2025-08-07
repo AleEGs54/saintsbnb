@@ -56,10 +56,10 @@ module.exports = (app) => {
         ),
     );
 
-    // --- Github Strategy (for social login) ---
+    // --- Github Strategy ---
     if (process.env.AUTH0_CLIENT_ID && process.env.AUTH0_CLIENT_SECRET) {
         passport.use(
-            new GithubStrategy( // Troquei Auth0Strategy por GithubStrategy
+            new GithubStrategy(
                 {
                     clientID: process.env.AUTH0_CLIENT_ID,
                     clientSecret: process.env.AUTH0_CLIENT_SECRET,
@@ -74,7 +74,7 @@ module.exports = (app) => {
                         } else {
                             user = new User({
                                 auth0Id: profile.id,
-                                name: profile.displayName || profile.username, // Usei 'username' como fallback para 'name'
+                                name: profile.displayName || profile.username,
                                 email:
                                     profile.emails && profile.emails.length > 0
                                         ? profile.emails[0].value
