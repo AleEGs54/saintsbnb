@@ -4,7 +4,7 @@ const swaggerDocument = require('../swagger-output.json');
 
 // login page
 router.get('/login', (req, res) => {
-    res.sendFile(__dirname + '/login.html');
+    res.sendFile(__dirname + '/../login.html');
 });
 
 // swagger route.
