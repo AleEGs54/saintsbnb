@@ -7,17 +7,47 @@ const cors = require('cors');
 require('dotenv').config();
 const session = require("express-session");
 const bodyParser = require("body-parser");
+const passport = require("passport");
 
 const port = process.env.PORT || 3000;
 
+// Passport configuration
+require('./auth/passport')(passport)
+
 // Middleware
-app.use(cors()); // Allows requests from any origin
-app.use(express.json()); // Parses incoming JSON data
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors({
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD"], 
+  origin: "*"
+}));
 
+// Sessions & Passport
+app.use(session({
+  secret: process.env.GOOGLE_CLIENT_SECRET || "your-secret-key-here",
+  resave: false,
+  saveUninitialized: false,
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
-// Routers
-app.use('/', require('./routes')); // Main router
+app.get("/", (req, res) => { 
+  res.send(req.session.user !== undefined ? `Logged in as ${req.session.user.username || req.session.user.displayName}` : "Not logged in"); 
+});
+
+app.get("/auth/google/callback", 
+  passport.authenticate("google", { failureRedirect: "/login" }),
+  (req, res) => {
+    req.session.user = req.user;  // 🎯 THIS IS THE CRUCIAL MISSING PIECE
+    res.redirect("/");
+  }
+);
+// Auth Route FIRST to ensure /auth/... paths are handled
+app.use('/auth', require('./routes/auth'));
+
+// Then Main routes
+app.use('/', require('./routes'));
+
 
 
 // 404 Handler
@@ -52,3 +82,4 @@ connectDB()
   .catch(err => {
     console.error("❌ Failed to connect to database:", err);
   });
+
