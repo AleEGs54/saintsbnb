@@ -16,8 +16,8 @@ router.post(
     calendarController.createCalendarEntry,
 );
 
-// Get all calendar entries for a specific housing post
-router.get('/post/:postId', calendarController.getCalendarByPost);
+// Get all calendar entries for a specific housing listing
+router.get('/housing/:housingId', calendarController.getCalendarByHousing);
 
 // Update a calendar entry by ID
 router.put(

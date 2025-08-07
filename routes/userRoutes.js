@@ -19,7 +19,7 @@ require('dotenv').config();
 
 // OAuth Login Route (Generic Placeholder)
 router.get(
-    //#swagger.tags = ['Users'];
+    /* #swagger.ignore = true */
     '/auth/external',
     passport.authenticate(
         process.env.AUTHENTICATION_PASSPORT || 'some-default-strategy',
@@ -28,6 +28,7 @@ router.get(
 
 // Generic OAuth Callback Route
 router.get(
+    /* #swagger.ignore = true */
     '/auth/external/callback',
     passport.authenticate(
         process.env.AUTHENTICATION_PASSPORT || 'some-default-strategy',
@@ -103,11 +104,16 @@ router.delete('/:id', isAuthenticated, userController.deleteUser);
 
 // Example dashboard route (for successful login redirect)
 
-router.get('/dashboard', isAuthenticated, (req, res) => {
-    res.status(200).json({
-        message: 'Welcome to your dashboard!',
-        user: req.user,
-    });
-});
+router.get(
+    /* #swagger.ignore = true */
+    '/dashboard',
+    isAuthenticated,
+    (req, res) => {
+        res.status(200).json({
+            message: 'Welcome to your dashboard!',
+            user: req.user,
+        });
+    },
+);
 
 module.exports = router;

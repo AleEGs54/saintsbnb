@@ -34,7 +34,7 @@ router.use(
 
 // calendar routes
 router.use(
-    //#swagger.tags = ['Users'];
+    //#swagger.tags = ['Calendar'];
     '/calendar',
     require('./calendarRoutes'),
 ); // All routes in calendarRoutes will be prefixed with /calendar

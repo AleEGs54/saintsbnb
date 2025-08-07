@@ -47,9 +47,6 @@
     },
     "/users/auth/external": {
       "get": {
-        "tags": [
-          "Users"
-        ],
         "description": "",
         "responses": {
           "default": {
@@ -60,9 +57,6 @@
     },
     "/users/auth/external/callback": {
       "get": {
-        "tags": [
-          "Users"
-        ],
         "description": "",
         "responses": {
           "default": {
@@ -350,16 +344,10 @@
     },
     "/users/dashboard": {
       "get": {
-        "tags": [
-          "Users"
-        ],
         "description": "",
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "401": {
-            "description": "Unauthorized"
+          "default": {
+            "description": ""
           }
         }
       }
@@ -484,41 +472,6 @@
           },
           "404": {
             "description": "Not Found"
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "rooms": {
-                    "example": "any"
-                  },
-                  "availability": {
-                    "example": "any"
-                  },
-                  "price": {
-                    "example": "any"
-                  },
-                  "address": {
-                    "example": "any"
-                  },
-                  "maxOccupants": {
-                    "example": "any"
-                  },
-                  "features": {
-                    "example": "any"
-                  },
-                  "description": {
-                    "example": "any"
-                  },
-                  "images": {
-                    "example": "any"
-                  }
-                }
-              }
-            }
           }
         }
       },
@@ -684,7 +637,7 @@
         }
       }
     },
-    "/booking/post/{postId}": {
+    "/booking/housing/{housingId}": {
       "get": {
         "tags": [
           "Booking"
@@ -692,7 +645,7 @@
         "description": "",
         "parameters": [
           {
-            "name": "postId",
+            "name": "housingId",
             "in": "path",
             "required": true,
             "schema": {
@@ -701,9 +654,6 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "401": {
             "description": "Unauthorized"
           }
@@ -713,7 +663,7 @@
     "/calendar/": {
       "post": {
         "tags": [
-          "Users"
+          "Calendar"
         ],
         "description": "",
         "responses": {
@@ -729,15 +679,15 @@
         }
       }
     },
-    "/calendar/post/{postId}": {
+    "/calendar/housing/{housingId}": {
       "get": {
         "tags": [
-          "Users"
+          "Calendar"
         ],
         "description": "",
         "parameters": [
           {
-            "name": "postId",
+            "name": "housingId",
             "in": "path",
             "required": true,
             "schema": {
@@ -746,8 +696,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": ""
           }
         }
       }
@@ -755,7 +705,7 @@
     "/calendar/{id}": {
       "put": {
         "tags": [
-          "Users"
+          "Calendar"
         ],
         "description": "",
         "parameters": [
@@ -785,7 +735,7 @@
       },
       "delete": {
         "tags": [
-          "Users"
+          "Calendar"
         ],
         "description": "",
         "parameters": [

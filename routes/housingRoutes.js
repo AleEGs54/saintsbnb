@@ -1,39 +1,34 @@
-// routes/housingRoutes.js
 const express = require('express');
 const router = express.Router();
 const housingController = require('../controllers/housingController');
 const { housingValidationRules, validate } = require('../utilities/validation');
-const { isAuthenticated } = require('../auth/authenticate'); //
+const { isAuthenticated } = require('../auth/authenticate');
 
-// GET all housing posts (publicly accessible or with optional authentication)
+// GET all housing listings
 router.get('/', housingController.getAllHousing);
 
-// GET a single housing post by ID
+// GET a single housing listing by ID
 router.get('/:id', housingController.getHousingById);
 
-// POST a new housing post (requires authentication)
+// POST a new housing listing (requires authentication)
 router.post(
     '/',
-    isAuthenticated, // Only authenticated users can create posts
-    housingValidationRules, // Validation middleware
-    validate, // Validation result handler
+    isAuthenticated,
+    housingValidationRules,
+    validate,
     housingController.createHousing,
 );
 
-// PUT update an existing housing post by ID (requires authentication and ownership)
+// PUT update an existing housing listing by ID (requires authentication and ownership)
 router.put(
     '/:id',
-    isAuthenticated, // Only authenticated users can update posts
-    housingValidationRules, // Validation middleware
-    validate, // Validation result handler
+    isAuthenticated,
+    housingValidationRules,
+    validate,
     housingController.updateHousing,
 );
 
-// DELETE a housing post by ID (requires authentication and ownership)
-router.delete(
-    '/:id',
-    isAuthenticated, // Only authenticated users can delete posts
-    housingController.deleteHousing,
-);
+// DELETE a housing listing by ID (requires authentication and ownership)
+router.delete('/:id', isAuthenticated, housingController.deleteHousing);
 
 module.exports = router;

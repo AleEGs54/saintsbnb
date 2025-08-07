@@ -23,11 +23,11 @@ router.get(
     bookingController.getBookingsByUser,
 );
 
-// Get all bookings for a specific housing post
+// Get all bookings for a specific housing listing
 router.get(
-    '/post/:postId',
+    '/housing/:housingId',
     isAuthenticated,
-    bookingController.getBookingsByPost,
+    bookingController.getBookingsByHousing,
 );
 
 // Update a booking by ID

@@ -4,18 +4,18 @@ exports.createCalendarEntry = async (req, res, next) => {
     try {
         const entry = new Calendar(req.body);
         const saved = await entry.save();
-        res.status(201).json(saved);
+        return res.status(201).json(saved);
     } catch (err) {
-        next(err);
+        return next(err);
     }
 };
 
 exports.getCalendarByPost = async (req, res, next) => {
     try {
         const entries = await Calendar.find({ post_id: req.params.postId });
-        res.status(200).json(entries);
+        return res.status(200).json(entries);
     } catch (err) {
-        next(err);
+        return next(err);
     }
 };
 
@@ -31,9 +31,9 @@ exports.updateCalendarEntry = async (req, res, next) => {
                 .status(404)
                 .json({ message: 'Calendar entry not found' });
         }
-        res.status(200).json(updated);
+        return res.status(200).json(updated);
     } catch (err) {
-        next(err);
+        return next(err);
     }
 };
 
@@ -45,8 +45,8 @@ exports.deleteCalendarEntry = async (req, res, next) => {
                 .status(404)
                 .json({ message: 'Calendar entry not found' });
         }
-        res.status(200).json({ message: 'Calendar entry deleted' });
+        return res.status(200).json({ message: 'Calendar entry deleted' });
     } catch (err) {
-        next(err);
+        return next(err);
     }
 };

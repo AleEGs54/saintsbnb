@@ -1,13 +1,13 @@
-// controllers/housingController.js
-const HousingModel = require('../models/housingModel');
+const Housing = require('../models/housingModel');
+
 const housingController = {};
 
-// create a new housing post
+// Create a new housing listing
 housingController.createHousing = async (req, res, next) => {
     try {
         if (!req.user || !req.user._id) {
             return res.status(401).json({
-                message: 'Authentication required to create a housing post.',
+                message: 'Authentication required to create a housing listing.',
             });
         }
 
@@ -31,14 +31,14 @@ housingController.createHousing = async (req, res, next) => {
             features,
             description,
             images,
-            user_id: req.user._id,
+            userId: req.user._id,
         };
 
-        const newHousing = new HousingModel(housingData);
+        const newHousing = new Housing(housingData);
         await newHousing.save();
 
         return res.status(201).json({
-            message: 'Housing post created successfully!',
+            message: 'Housing listing created successfully!',
             housing: newHousing,
         });
     } catch (error) {
@@ -51,92 +51,86 @@ housingController.createHousing = async (req, res, next) => {
     }
 };
 
-// get all housing posts
+// Get all housing listings
 housingController.getAllHousing = async (req, res, next) => {
     try {
-        const housingPosts = await HousingModel.find({}).populate(
-            'user_id',
+        const housings = await Housing.find({}).populate(
+            'userId',
             'name email',
         );
-        return res.status(200).json(housingPosts);
+        return res.status(200).json(housings);
     } catch (error) {
         return next(error);
     }
 };
 
-// get housing post by ID
+// Get housing listing by ID
 housingController.getHousingById = async (req, res, next) => {
     try {
-        const housingId = req.params.id;
-        const housing = await HousingModel.findById(housingId).populate(
-            'user_id',
+        const housing = await Housing.findById(req.params.id).populate(
+            'userId',
             'name email',
         );
-
         if (!housing) {
-            return res.status(404).json({ message: 'Housing post not found.' });
+            return res
+                .status(404)
+                .json({ message: 'Housing listing not found.' });
         }
-
         return res.status(200).json(housing);
     } catch (error) {
         return next(error);
     }
 };
 
-// update an existing housing post by ID
+// Update housing listing by ID
 housingController.updateHousing = async (req, res, next) => {
     try {
         if (!req.user || !req.user._id) {
             return res.status(401).json({
-                message: 'Authentication required to update a housing post.',
+                message: 'Authentication required to update a housing listing.',
             });
         }
 
-        const housingId = req.params.id;
-        const {
-            rooms,
-            availability,
-            price,
-            address,
-            maxOccupants,
-            features,
-            description,
-            images,
-        } = req.body;
-
-        const housing = await HousingModel.findById(housingId);
+        const housing = await Housing.findById(req.params.id);
 
         if (!housing) {
-            return res.status(404).json({ message: 'Housing post not found.' });
+            return res
+                .status(404)
+                .json({ message: 'Housing listing not found.' });
         }
 
-        // Check if the authenticated user is the owner of the post
-        if (housing.user_id.toString() !== req.user._id.toString()) {
+        if (housing.userId.toString() !== req.user._id.toString()) {
             return res.status(403).json({
                 message:
-                    'Forbidden: You do not have permission to update this housing post.',
+                    'Forbidden: You do not have permission to update this housing listing.',
             });
         }
 
-        const updateData = {
-            rooms,
-            availability,
-            price,
-            address,
-            maxOccupants,
-            features,
-            description,
-            images,
-        };
+        const updateData = {};
+        const allowedFields = [
+            'rooms',
+            'availability',
+            'price',
+            'address',
+            'maxOccupants',
+            'features',
+            'description',
+            'images',
+        ];
+        allowedFields.forEach((field) => {
+            if (req.body[field] !== undefined) {
+                updateData[field] = req.body[field];
+            }
+        });
 
-        const updatedHousing = await HousingModel.findByIdAndUpdate(
-            housingId,
+        const updatedHousing = await Housing.findByIdAndUpdate(
+            req.params.id,
             updateData,
             { new: true, runValidators: true },
-        ).populate('user_id', 'name email');
+        ).populate('userId', 'name email');
 
         return res.status(200).json({
-            message: 'Housing post updated successfully!',
+            message: 'Housing listing updated successfully!',
             housing: updatedHousing,
         });
     } catch (error) {
@@ -149,35 +143,35 @@ housingController.updateHousing = async (req, res, next) => {
     }
 };
 
-// delete a housing post by ID
+// Delete housing listing by ID
 housingController.deleteHousing = async (req, res, next) => {
     try {
         if (!req.user || !req.user._id) {
             return res.status(401).json({
-                message: 'Authentication required to delete a housing post.',
+                message: 'Authentication required to delete a housing listing.',
             });
         }
 
-        const housingId = req.params.id;
-        const housing = await HousingModel.findById(housingId);
+        const housing = await Housing.findById(req.params.id);
 
         if (!housing) {
-            return res.status(404).json({ message: 'Housing post not found.' });
+            return res
+                .status(404)
+                .json({ message: 'Housing listing not found.' });
         }
 
-        // Check if the authenticated user is the owner of the post
-        if (housing.user_id.toString() !== req.user._id.toString()) {
+        if (housing.userId.toString() !== req.user._id.toString()) {
             return res.status(403).json({
                 message:
-                    'Forbidden: You do not have permission to delete this housing post.',
+                    'Forbidden: You do not have permission to delete this housing listing.',
             });
         }
 
-        await HousingModel.findByIdAndDelete(housingId);
+        await Housing.findByIdAndDelete(req.params.id);
 
         return res
             .status(200)
-            .json({ message: 'Housing post deleted successfully!' });
+            .json({ message: 'Housing listing deleted successfully!' });
     } catch (error) {
         return next(error);
     }
