@@ -72,6 +72,22 @@ module.exports = (app) => {
                         if (user) {
                             return done(null, user);
                         } else {
+                            let userEmail = null;
+                            if (profile.emails && profile.emails.length > 0) {
+                                userEmail = profile.emails[0].value;
+                            } else if (profile._json && profile._json.email) {
+                                userEmail = profile._json.email;
+                            }
+
+                            if (!userEmail) {
+                                return done(
+                                    new Error(
+                                        'Email is required for registration.',
+                                    ),
+                                    null,
+                                );
+                            }
+
                             user = new User({
                                 auth0Id: profile.id,
                                 name: profile.displayName || profile.username,

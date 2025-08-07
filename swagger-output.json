@@ -32,16 +32,6 @@
     }
   ],
   "paths": {
-    "/login": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/": {
       "get": {
         "tags": [
