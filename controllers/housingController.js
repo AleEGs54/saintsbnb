@@ -82,7 +82,7 @@ housingController.getHousingById = async (req, res, next) => {
     }
 };
 
-exports.updateHousing = async (req, res, next) => {
+housingController.updateHousing = async (req, res, next) => {
     try {
         if (!req.user || !req.user._id) {
             return res.status(401).json({
