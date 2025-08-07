@@ -20,7 +20,8 @@ router.post(
 );
 
 // PUT update an existing housing listing by ID (requires authentication and ownership)
-// Usando a mesma estrutura do userRoutes.js
+// A validação agora é chamada como uma função para garantir que o express-validator
+// retorne um array de middlewares válido e evite o TypeError.
 router.put(
     '/:id',
     isAuthenticated,
