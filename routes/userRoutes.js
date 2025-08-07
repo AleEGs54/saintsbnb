@@ -17,26 +17,21 @@ const {
 } = require('../utilities/index');
 require('dotenv').config();
 
-// OAuth Login Route (Generic Placeholder)
+// OAuth Login Route
 router.get(
     /* #swagger.ignore = true */
-    '/auth/external',
-    passport.authenticate(
-        process.env.AUTHENTICATION_PASSPORT || 'some-default-strategy',
-    ),
+    '/auth/github',
+    passport.authenticate('auth0', { scope: 'openid email profile' }),
 );
 
-// Generic OAuth Callback Route
+// OAuth Callback Route
 router.get(
     /* #swagger.ignore = true */
-    '/auth/external/callback',
-    passport.authenticate(
-        process.env.AUTHENTICATION_PASSPORT || 'some-default-strategy',
-        { failureRedirect: '/users/login' },
-    ),
-    (req, res) => {
-        res.redirect('/users/dashboard');
-    },
+    '/auth/github/callback',
+    passport.authenticate('auth0', {
+        failureRedirect: '/users/login',
+        successRedirect: '/users/dashboard',
+    }),
 );
 
 // Route to register a new user (account creation)

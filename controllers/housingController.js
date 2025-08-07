@@ -116,15 +116,7 @@ housingController.updateHousing = async (req, res, next) => {
             images,
         } = req.body;
         const updatedHousing = await Housing.findByIdAndUpdate(
-            req.params.id, 
-
-
-
-
-
-
-
-            
+            req.params.id,
             {
                 rooms,
                 availability,

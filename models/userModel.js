@@ -41,17 +41,12 @@ const userSchema = new mongoose.Schema(
             required: true,
             default: 'guest',
         },
-        providerID: {
-            // Generalized ID for any OAuth provider
+        auth0Id: {
+            // ID for any OAuth provider
             type: String,
             unique: true,
             sparse: true, // Allows null values, but ensures uniqueness if a value exists
         },
-        // githubId: { // Removed this specific ID as you opted for a general providerID
-        //     type: String,
-        //     unique: true,
-        //     sparse: true
-        // }
     },
     {
         timestamps: true,

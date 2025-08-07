@@ -32,6 +32,16 @@
     }
   ],
   "paths": {
+    "/login": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/": {
       "get": {
         "tags": [
@@ -45,7 +55,7 @@
         }
       }
     },
-    "/users/auth/external": {
+    "/users/auth/github": {
       "get": {
         "description": "",
         "responses": {
@@ -55,7 +65,7 @@
         }
       }
     },
-    "/users/auth/external/callback": {
+    "/users/auth/github/callback": {
       "get": {
         "description": "",
         "responses": {
