@@ -2,6 +2,10 @@ const express = require('express')
 const passport = require('passport')
 const router = express.Router()
 
+// Google authentication routes
+// to login you must hit this endpoint: /auth/google
+// to log out you must hit this endpoint: /auth/logout
+
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }))
 
 router.get(
