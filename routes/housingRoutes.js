@@ -20,6 +20,7 @@ router.post(
 );
 
 // PUT update an existing housing listing by ID (requires authentication and ownership)
+// Usando a mesma estrutura do userRoutes.js
 router.put(
     '/:id',
     isAuthenticated,
