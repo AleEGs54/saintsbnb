@@ -48,6 +48,11 @@ passportConfig(app); // Call the passport config function and pass the app insta
 // database connection
 connectToDatabase();
 
+// login page
+app.get('/login', (req, res) => {
+    res.sendFile(__dirname + '/login.html');
+});
+
 //app routers
 app.use('/', require('./routes')); //Main router
 
