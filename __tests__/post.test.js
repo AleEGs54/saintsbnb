@@ -4,7 +4,7 @@ const { app } = require('../server')
 const Post = require('../models/postModel');
 
 describe('Posts', () => {
-  let fakeUserId, post;
+    let fakeUserId, post;
 
     beforeEach(async () => {
         fakeUserId = new mongoose.Types.ObjectId();
@@ -13,7 +13,7 @@ describe('Posts', () => {
             user_id: fakeUserId,
             rooms: 2,
             availability: 'available',
-            owner: 'John Doe',
+            owner: 'saints BnB',
             price: '150',
             address: '123 Main St, Springfield',
             max_occupants: 4,
