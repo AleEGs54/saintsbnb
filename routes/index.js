@@ -6,6 +6,7 @@ router.use('/api-docs', require('./swagger'));
 router.use('/posts', require('./post'));
 router.use('/reservations', require('./reservation'));
 router.use('/reviews', require('./review'));
+router.use('/user', require('./user'));
 router.use('/auth', require('./auth'));
 
 
