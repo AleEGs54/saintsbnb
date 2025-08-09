@@ -8,5 +8,6 @@ router.get('/:id', handleValidation, userController.getById);
 router.post('/', isAuthenticated, handleValidation, userController.createUser);
 router.put('/:id', isAuthenticated, handleValidation, userController.updateUser);
 router.delete('/:id', isAuthenticated, handleValidation, userController.deleteUser);
+router.patch('/:id/toggle-admin', isAuthenticated, handleValidation, userController.toggleAdmin);
 
 module.exports = router;
