@@ -8,6 +8,7 @@ const doc = {
             'Api for SaintsBnB to display endpoints available and ready for consumption',
     },
     host: 'saintsbnb.onrender.com',
+    // host: 'localhost:3000',
     basePath: '/',
     schemes: ['https'],
 };
