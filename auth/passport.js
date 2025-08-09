@@ -1,6 +1,3 @@
-console.log('[DEBUG] GITHUB_CLIENT_ID:', process.env.GITHUB_CLIENT_ID);
-console.log('[DEBUG] GITHUB_CLIENT_SECRET exists?', !!process.env.GITHUB_CLIENT_SECRET);
-
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const GithubStrategy = require('passport-github2').Strategy;
@@ -78,65 +75,73 @@ module.exports = (app) => {
                     try {
                         let user = await User.findOne({ githubId: profile.id });
 
-                        if (user) {
+                        // If no user with githubId, check by email
+                        if (!user) {
+                            let userEmail = null;
+
+                            // Try to get email from profile
+                            if (profile.emails && profile.emails.length > 0) {
+                                userEmail = profile.emails[0].value;
+                            } else if (profile._json && profile._json.email) {
+                                userEmail = profile._json.email;
+                            }
+
+                            // If no email in profile, fetch from GitHub API
+                            if (!userEmail) {
+                                const { data } = await axios.get(
+                                    'https://api.github.com/user/emails',
+                                    {
+                                        headers: {
+                                            Authorization: `token ${accessToken}`,
+                                        },
+                                    },
+                                );
+                                const primaryEmail = data.find(
+                                    (email) => email.primary && email.verified,
+                                );
+                                if (primaryEmail) {
+                                    userEmail = primaryEmail.email;
+                                }
+                            }
+
+                            if (!userEmail) {
+                                return done(
+                                    new Error(
+                                        'Email is required for registration.',
+                                    ),
+                                    null,
+                                );
+                            }
+
+                            // Check if email already exists
+                            const existingUser = await User.findOne({
+                                email: userEmail,
+                            });
+                            if (existingUser) {
+                                // Link GitHub to existing user
+                                existingUser.githubId = profile.id;
+                                await existingUser.save();
+                                return done(null, existingUser);
+                            }
+
+                            // Create new user
+                            user = new User({
+                                githubId: profile.id,
+                                name: profile.displayName || profile.username,
+                                email: userEmail,
+                                role: 'guest',
+                            });
+                            await user.save();
                             return done(null, user);
                         }
 
-                        // Try to get email from profile
-                        let userEmail = null;
-                        if (profile.emails && profile.emails.length > 0) {
-                            userEmail = profile.emails[0].value;
-                        } else if (profile._json && profile._json.email) {
-                            userEmail = profile._json.email;
-                        }
-
-                        // If no email in profile, fetch from GitHub API
-                        if (!userEmail) {
-                            const { data } = await axios.get(
-                                'https://api.github.com/user/emails',
-                                {
-                                    headers: {
-                                        Authorization: `token ${accessToken}`,
-                                    },
-                                },
-                            );
-
-                            const primaryEmail = data.find(
-                                (email) => email.primary && email.verified,
-                            );
-                            if (primaryEmail) {
-                                userEmail = primaryEmail.email;
-                            }
-                        }
-
-                        if (!userEmail) {
-                            return done(
-                                new Error(
-                                    'Email is required for registration.',
-                                ),
-                                null,
-                            );
-                        }
-
-                        // Create new user
-                        user = new User({
-                            githubId: profile.id,
-                            name: profile.displayName || profile.username,
-                            email: userEmail,
-                            role: 'guest',
-                        });
-
-                        await user.save();
+                        // User with githubId found
                         return done(null, user);
                     } catch (err) {
                         return done(err);
                     }
                 },
             ),
-        );
-    } else {
-        console.warn(
-            'GitHub credentials not found in .env. GitHub login will be unavailable until configured.',
         );
     }
 };
