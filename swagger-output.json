@@ -5,10 +5,10 @@
     "description": "Api for SaintsBnB to display endpoints available and ready for consumption",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "saintsbnb.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/": {
