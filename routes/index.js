@@ -14,6 +14,10 @@ router.get('/', (req, res) => {
   res.send('Welcome to the home page!');
 });
 
+router.get('/login', (req, res) => {
+  res.redirect('/auth/login');
+});
+
 // Optional: a simple "logged out" screen
 router.get('/logoutscreen', (req, res) => {
   res.send('Welcome to the home page! You have been logged out.');

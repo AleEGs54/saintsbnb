@@ -1,5 +1,3 @@
-
-
 const { validationResult } = require('express-validator');
 
 const handleValidation = (req, res, next) => {
@@ -11,11 +9,22 @@ const handleValidation = (req, res, next) => {
 };
 
 const isAuthenticated = (req, res, next) => {
-  if (req.session.user === undefined) {
-    return res.status(401).json({ message: 'Unauthorized' });
-  } 
-  console.log("User is authenticated:", req.session.user);
-  next();
+  // If Passport has established a session, allow the request
+  if (req.isAuthenticated && req.isAuthenticated()) {
+    return next();
+  }
+  // Fallback: Passport attaches the user object even if isAuthenticated() isn’t defined
+  if (req.user) {
+    return next();
+  }
+  // Unauthorized: generic message with login hints
+  return res.status(401).json({
+    message: 'Unauthorized – please log in',
+    loginUrls: {
+      github: '/auth/login'
+      // google: '/auth/google' // keep if you still support Google logins
+    }
+  });
 };
 
-module.exports = {handleValidation, isAuthenticated};
+module.exports = { handleValidation, isAuthenticated };
