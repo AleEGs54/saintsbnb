@@ -16,6 +16,19 @@ const {
 } = require('../utilities/index');
 require('dotenv').config();
 
+// Example dashboard route (for successful login redirect)
+router.get(
+    /* #swagger.ignore = true */
+    '/dashboard',
+    isAuthenticated,
+    (req, res) => {
+        res.status(200).json({
+            message: 'Welcome to your dashboard!',
+            user: req.user,
+        });
+    },
+);
+
 // Github Login Route
 router.get(
     /* #swagger.ignore = true */
@@ -52,7 +65,6 @@ router.post(
 );
 
 // Route for local user login
-
 router.post(
     '/login',
     loginValidationRules,
@@ -93,21 +105,6 @@ router.put(
 );
 
 // DELETE route to delete a user by ID
-
 router.delete('/:id', isAuthenticated, userController.deleteUser);
-
-// Example dashboard route (for successful login redirect)
-
-router.get(
-    /* #swagger.ignore = true */
-    '/dashboard',
-    isAuthenticated,
-    (req, res) => {
-        res.status(200).json({
-            message: 'Welcome to your dashboard!',
-            user: req.user,
-        });
-    },
-);
 
 module.exports = router;
