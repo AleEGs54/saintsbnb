@@ -70,6 +70,8 @@ Kindly share the variables so we all can use them.
 - [ ] No `console.log` or unused code left behind
 - [ ] PR description clearly explains the purpose
 
+
+
 ---
 
 ### Contributors
@@ -80,3 +82,4 @@ Kindly share the variables so we all can use them.
 - Luis Lizano
 - Trystan Jones
 - Natnael Gashaw
+- Aaron Lopez
