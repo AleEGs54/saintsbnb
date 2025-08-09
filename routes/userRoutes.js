@@ -1,4 +1,3 @@
-// routes/userRoutes.js
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
@@ -17,14 +16,14 @@ const {
 } = require('../utilities/index');
 require('dotenv').config();
 
-// OAuth Login Route
+// Github Login Route
 router.get(
     /* #swagger.ignore = true */
     '/auth/github',
     passport.authenticate('github', { scope: ['user:email'] }),
 );
 
-// OAuth Callback Route
+// Github Callback Route
 router.get(
     /* #swagger.ignore = true */
     '/auth/github/callback',

@@ -1,4 +1,3 @@
-// auth/authenticate.js
 const isAuthenticated = (req, res, next) => {
     // Use req.isAuthenticated() from Passport.js to check if the user is authenticated.
     if (req.isAuthenticated()) {

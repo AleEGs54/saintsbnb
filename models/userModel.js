@@ -1,4 +1,3 @@
-// models/userModel.js
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
@@ -9,7 +8,7 @@ const bcrypt = require('bcrypt');
  * @property {string} password - The hashed password of the user (required for local login)
  * @property {string} phone - The phone number of the user
  * @property {string} role.required.enum - The role of the user (guest, host, admin)
- * @property {string} [providerID] - ID from OAuth provider (e.g., Google, GitHub)
+ * @property {string} [githubId] - ID from GitHub OAuth
  */
 const userSchema = new mongoose.Schema(
     {
@@ -26,9 +25,8 @@ const userSchema = new mongoose.Schema(
             lowercase: true,
         },
         password: {
-            // Added for local login
+            // Only required for local login
             type: String,
-            // required: true, // Make this required only if not using OAuth exclusively for a user
             select: false, // Do not return password by default in queries
         },
         phone: {
@@ -41,11 +39,10 @@ const userSchema = new mongoose.Schema(
             required: true,
             default: 'guest',
         },
-        auth0Id: {
-            // ID for any OAuth provider
+        githubId: {
             type: String,
             unique: true,
-            sparse: true, // Allows null values, but ensures uniqueness if a value exists
+            sparse: true, // Allows null values, but enforces uniqueness if a value exists
         },
     },
     {
@@ -53,11 +50,10 @@ const userSchema = new mongoose.Schema(
     },
 );
 
-// Hash the password before saving a new user or if password is modified
+// Hash the password before saving if modified
 userSchema.pre('save', async function (next) {
     if (this.isModified('password') && this.password) {
-        // Only hash if password exists and is modified
-        this.password = await bcrypt.hash(this.password, 10); // Hash with 10 salt rounds
+        this.password = await bcrypt.hash(this.password, 10); // Salt rounds = 10
     }
     next();
 });

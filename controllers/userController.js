@@ -1,4 +1,3 @@
-// controllers/userController.js
 const userModel = require('../models/userModel');
 const passport = require('passport');
 const userController = {};
@@ -175,7 +174,7 @@ userController.loginLocal = (req, res, next) => {
             if (err) return next(err);
             return res.status(200).json({ message: 'Login successful', user });
         });
-    })(req, res, next); // Agora a função retorna sempre
+    })(req, res, next);
 };
 
 module.exports = userController;

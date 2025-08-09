@@ -1,4 +1,3 @@
-// utilities/validation.js
 const { body, validationResult } = require('express-validator');
 
 // Validation rules for user creation/update (restricted for clients)
