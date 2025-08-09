@@ -6,7 +6,7 @@ const reviewSchema = new Schema({
     post_id: { type: Schema.Types.ObjectId, required: true },
     review_date: { type: Date, required: true },
     review_text: { type: String, required: true },
-    rating: { type: Number, required: true },
+    ratings: { type: Number, required: true },
 });
 
 
