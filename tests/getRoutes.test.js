@@ -29,7 +29,7 @@ beforeAll(async () => {
     const user = new User({
         name: 'Test User',
         email: 'testuser@example.com',
-        role: 'guest',
+        role: 'admin',
         password: 'Test1234',
     });
     await user.save();

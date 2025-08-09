@@ -1,0 +1,103 @@
+// UNIT TEST
+
+// LOGIN WITH GITHUB
+
+// GET /users/logout
+
+// SHOW THAT NEED BE LOGGED IN TO USE THE FUNCTIONS
+
+// POST /users/register
+
+{
+"name": "Alice Smith",
+"email": "alice.smith@example.com",
+"password": "AdminPass123!",
+"phone": "0987654321",
+"role": "admin"
+}
+
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "password": "Password1!",
+  "phone": "1234567890",
+  "role": "guest"
+}
+
+// GET /users/logout
+
+// POST /users/login
+
+{
+  "email": "login@login.com",
+  "password": "any"
+}
+
+{
+  "email": "testuser@example.com",
+  "password": "Test1234"
+}
+
+// POST /users/
+
+{
+"name": "Alice Smith",
+"email": "alice.smith@example.com",
+"password": "AdminPass123!",
+"phone": "0987654321",
+"role": "admin"
+}
+
+// GET /users/{id}
+
+// PUT /users/{id}
+
+{
+"name": "Alice is now a guest",
+"email": "alice.guest@example.com",
+"password": "GuestPass123!",
+"phone": "0987654321",
+"role": "guest"
+}
+
+// DELETE /users/{id}
+
+// GET /users/
+
+// POST /housing/
+
+{
+"rooms": 3,
+"availability": true,
+"price": 150.50,
+"address": "456 Elm Street",
+"maxOccupants": 5,
+"features": ["WiFi", "Air Conditioning", "Heating"],
+"description": "Spacious and comfortable housing near downtown.",
+"images": [
+"/images/house-front.jpg",
+"https://example.com/images/living-room.jpg"
+]
+}
+
+// GET /housing/{id}
+
+// PUT /housing/{id}
+
+{
+"rooms": 3,
+"availability": true,
+"price": 150.50,
+"address": "456 Elm Street",
+"maxOccupants": 5,
+"features": ["WiFi", "Air Conditioning", "Heating"],
+"description": "HOUSE IS CHANGED",
+"images": [
+"/images/house-front.jpg",
+"https://example.com/images/living-room.jpg"
+]
+}
+
+// DELETE /housing/{id}
+
+// GET /housing/

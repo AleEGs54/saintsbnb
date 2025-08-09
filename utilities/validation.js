@@ -147,20 +147,20 @@ const housingValidationRules = [
 ];
 
 const bookingValidationRules = [
-    body('post_id')
+    body('housingId')
         .notEmpty()
         .withMessage('Housing ID is required.')
         .isMongoId()
         .withMessage('Housing ID must be a valid Mongo ID.'),
-    body('user_id')
+    body('userId')
         .notEmpty()
         .withMessage('User ID is required.')
         .isMongoId()
         .withMessage('User ID must be a valid Mongo ID.'),
-    body('check_in_date')
+    body('checkInDate')
         .isISO8601()
         .withMessage('Check-in date must be a valid date.'),
-    body('check_out_date')
+    body('checkOutDate')
         .isISO8601()
         .withMessage('Check-out date must be a valid date.'),
     body('status')
@@ -169,13 +169,13 @@ const bookingValidationRules = [
         .withMessage(
             'Status must be pending, confirmed, cancelled, or concluded.',
         ),
-    body('total_price')
+    body('totalPrice')
         .isFloat({ min: 0 })
         .withMessage('Total price must be a positive number.'),
 ];
 
 const calendarValidationRules = [
-    body('post_id')
+    body('housingId')
         .notEmpty()
         .withMessage('Housing ID is required.')
         .isMongoId()

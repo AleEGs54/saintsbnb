@@ -2,8 +2,8 @@ const Calendar = require('../models/calendarModel');
 
 exports.createCalendarEntry = async (req, res, next) => {
     try {
-        const { post_id, start_date, end_date } = req.body;
-        const entryData = { post_id, start_date, end_date };
+        const { housingId, checkInDate, checkOutDate } = req.body;
+        const entryData = { housingId, checkInDate, checkOutDate };
         const entry = new Calendar(entryData);
         const saved = await entry.save();
         return res.status(201).json(saved);
@@ -14,7 +14,7 @@ exports.createCalendarEntry = async (req, res, next) => {
 
 exports.getCalendarByHousing = async (req, res, next) => {
     try {
-        const entries = await Calendar.find({ post_id: req.params.housingId });
+        const entries = await Calendar.find({ housingId: req.params.housingId });
         return res.status(200).json(entries);
     } catch (err) {
         return next(err);
@@ -37,7 +37,7 @@ exports.updateCalendarEntry = async (req, res, next) => {
                 .json({ message: 'Calendar entry not found' });
         }
 
-        const housing = await Housing.findById(entry.post_id);
+        const housing = await Housing.findById(entry.housingId);
 
         if (!housing) {
             return res
@@ -52,10 +52,10 @@ exports.updateCalendarEntry = async (req, res, next) => {
             });
         }
 
-        const { start_date, end_date } = req.body;
+        const { checkInDate, checkOutDate } = req.body;
         const updated = await Calendar.findByIdAndUpdate(
             req.params.id,
-            { start_date, end_date },
+            { checkInDate, checkOutDate },
             { new: true, runValidators: true },
         );
         if (!updated) {
