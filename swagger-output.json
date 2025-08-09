@@ -557,6 +557,29 @@
           "401": {
             "description": "Unauthorized"
           }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "example": "any"
+                  },
+                  "checkInDate": {
+                    "example": "any"
+                  },
+                  "checkOutDate": {
+                    "example": "any"
+                  },
+                  "totalPrice": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -629,13 +652,13 @@
                   "status": {
                     "example": "any"
                   },
-                  "start_date": {
+                  "checkInDate": {
                     "example": "any"
                   },
-                  "end_date": {
+                  "checkOutDate": {
                     "example": "any"
                   },
-                  "total_price": {
+                  "totalPrice": {
                     "example": "any"
                   }
                 }
@@ -747,13 +770,13 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "post_id": {
+                  "housingId": {
                     "example": "any"
                   },
-                  "start_date": {
+                  "date": {
                     "example": "any"
                   },
-                  "end_date": {
+                  "available": {
                     "example": "any"
                   }
                 }
@@ -825,10 +848,10 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "start_date": {
+                  "checkInDate": {
                     "example": "any"
                   },
-                  "end_date": {
+                  "checkOutDate": {
                     "example": "any"
                   }
                 }

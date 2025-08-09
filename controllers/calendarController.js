@@ -2,8 +2,8 @@ const Calendar = require('../models/calendarModel');
 
 exports.createCalendarEntry = async (req, res, next) => {
     try {
-        const { housingId, checkInDate, checkOutDate } = req.body;
-        const entryData = { housingId, checkInDate, checkOutDate };
+        const { housingId, date, available } = req.body;
+        const entryData = { housingId, date, available };
         const entry = new Calendar(entryData);
         const saved = await entry.save();
         return res.status(201).json(saved);
@@ -14,7 +14,9 @@ exports.createCalendarEntry = async (req, res, next) => {
 
 exports.getCalendarByHousing = async (req, res, next) => {
     try {
-        const entries = await Calendar.find({ housingId: req.params.housingId });
+        const entries = await Calendar.find({
+            housingId: req.params.housingId,
+        });
         return res.status(200).json(entries);
     } catch (err) {
         return next(err);

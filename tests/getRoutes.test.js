@@ -9,9 +9,9 @@ const Calendar = require('../models/calendarModel');
 let testUserId;
 let testHousingId;
 let testBookingId;
-let cookie; 
+let cookie;
 
-jest.setTimeout(30000); 
+jest.setTimeout(30000);
 
 beforeAll(async () => {
     if (mongoose.connection.readyState !== 1) {
@@ -78,7 +78,7 @@ beforeAll(async () => {
     expect(loginRes.headers['set-cookie'].length).toBeGreaterThan(0);
 
     cookie = loginRes.headers['set-cookie'][0];
-    expect(cookie).toBeDefined(); 
+    expect(cookie).toBeDefined();
 });
 
 afterAll(async () => {
@@ -161,13 +161,13 @@ describe('GET /calendar/housing/:housingId', () => {
 });
 
 describe('GET /users/logout', () => {
-  it('should logout the user and clear session cookie', async () => {
-    const res = await request(app)
-      .get('/users/logout')
-      .set('Cookie', cookie);
-    expect(res.statusCode).toBe(200);
-    expect(res.headers['set-cookie']).toBeDefined();
-    const clearedCookie = res.headers['set-cookie'][0];
-    expect(clearedCookie).toMatch(/Expires=Thu, 01 Jan 1970 00:00:00 GMT/);
-  });
+    it('should logout the user and clear session cookie', async () => {
+        const res = await request(app)
+            .get('/users/logout')
+            .set('Cookie', cookie);
+        expect(res.statusCode).toBe(200);
+        expect(res.headers['set-cookie']).toBeDefined();
+        const clearedCookie = res.headers['set-cookie'][0];
+        expect(clearedCookie).toMatch(/Expires=Thu, 01 Jan 1970 00:00:00 GMT/);
+    });
 });
