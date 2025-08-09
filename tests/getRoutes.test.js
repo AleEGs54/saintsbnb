@@ -1,6 +1,6 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
-const app = require('../app'); // seu app Express
+const app = require('../app');
 const User = require('../models/userModel');
 const Housing = require('../models/housingModel');
 const Booking = require('../models/bookingModel');
@@ -9,12 +9,11 @@ const Calendar = require('../models/calendarModel');
 let testUserId;
 let testHousingId;
 let testBookingId;
-let cookie; // para armazenar o cookie de sessão
+let cookie; 
 
-jest.setTimeout(30000); // aumenta timeout caso conexão demore
+jest.setTimeout(30000); 
 
 beforeAll(async () => {
-    // Conecta ao banco, caso ainda não conectado
     if (mongoose.connection.readyState !== 1) {
         await mongoose.connect(process.env.MONGODB_URI, {
             useNewUrlParser: true,
@@ -22,13 +21,11 @@ beforeAll(async () => {
         });
     }
 
-    // Limpa as coleções antes do teste
     await User.deleteMany({});
     await Housing.deleteMany({});
     await Booking.deleteMany({});
     await Calendar.deleteMany({});
 
-    // Cria usuário de teste (senha será hashed no model)
     const user = new User({
         name: 'Test User',
         email: 'testuser@example.com',
@@ -38,7 +35,6 @@ beforeAll(async () => {
     await user.save();
     testUserId = user._id.toString();
 
-    // Cria imóvel de teste
     const housing = new Housing({
         rooms: 3,
         availability: true,
@@ -50,7 +46,6 @@ beforeAll(async () => {
     await housing.save();
     testHousingId = housing._id.toString();
 
-    // Cria reserva de teste
     const booking = new Booking({
         housingId: testHousingId,
         userId: testUserId,
@@ -62,7 +57,6 @@ beforeAll(async () => {
     await booking.save();
     testBookingId = booking._id.toString();
 
-    // Cria calendário de teste
     const calendar = new Calendar({
         housingId: testHousingId,
         date: new Date(Date.now() + 86400000),
@@ -74,25 +68,20 @@ beforeAll(async () => {
         .post('/users/login')
         .send({ email: 'testuser@example.com', password: 'Test1234' });
 
-    // Log para debug, para você ver o que está retornando
     console.log('Login status:', loginRes.statusCode);
     console.log('Login headers:', loginRes.headers);
     console.log('Login body:', loginRes.body);
 
-    // Verifica se login foi bem-sucedido
     expect(loginRes.statusCode).toBe(200);
 
-    // Verifica se o cookie está presente no header
     expect(loginRes.headers['set-cookie']).toBeDefined();
     expect(loginRes.headers['set-cookie'].length).toBeGreaterThan(0);
 
-    // Salva o cookie para usar nas requisições autenticadas
     cookie = loginRes.headers['set-cookie'][0];
-    expect(cookie).toBeDefined(); // garante que cookie foi retornado
+    expect(cookie).toBeDefined(); 
 });
 
 afterAll(async () => {
-    // Fecha conexão mongoose depois dos testes
     await mongoose.connection.close();
 });
 
@@ -169,4 +158,16 @@ describe('GET /calendar/housing/:housingId', () => {
         expect(res.statusCode).toBe(200);
         expect(Array.isArray(res.body)).toBe(true);
     });
+});
+
+describe('GET /users/logout', () => {
+  it('should logout the user and clear session cookie', async () => {
+    const res = await request(app)
+      .get('/users/logout')
+      .set('Cookie', cookie);
+    expect(res.statusCode).toBe(200);
+    expect(res.headers['set-cookie']).toBeDefined();
+    const clearedCookie = res.headers['set-cookie'][0];
+    expect(clearedCookie).toMatch(/Expires=Thu, 01 Jan 1970 00:00:00 GMT/);
+  });
 });
