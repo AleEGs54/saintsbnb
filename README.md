@@ -29,6 +29,7 @@ Make sure another team member reviews and approves before merging.
 - `npm run swagger` to generate a swagger-output.json
 - `npm run lint` to look for warnings across the code.
 - `npm run fix` to fix most warnings.
+- `npm run test` to test.
 
 ### API Documentation
 
