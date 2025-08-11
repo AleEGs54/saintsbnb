@@ -5,6 +5,8 @@ const userController = {};
 // GET all users
 userController.getAll = async (req, res) => {
     // #swagger.tags = ['Users']
+    // #swagger.description = 'Retrieve a list of all users.'
+    // #swagger.summary = 'Get all users'
     try {
         const result = await User.find();
         console.log(result)
@@ -24,6 +26,8 @@ userController.getAll = async (req, res) => {
 // GET user by ID
 userController.getById = async (req, res) => {
     // #swagger.tags = ['Users']
+    // #swagger.description = 'Retrieve a specific user by their ID.'
+    // #swagger.summary = 'Get user by ID'
     try {
         const result = await User.findById(req.params.id);
         if (result) {
@@ -43,6 +47,8 @@ userController.getById = async (req, res) => {
 userController.createUser = async (req, res) => {
     // #swagger.tags = ['Users']
     // #swagger.security = [{ "googleOAuth": ["profile", "email"] }]
+    // #swagger.description = 'Create a new user.'
+    // #swagger.summary = 'Create a new user'
     try {
         const newUser = await User.create({
             googleId: req.body.googleId,
@@ -68,6 +74,8 @@ userController.createUser = async (req, res) => {
 userController.updateUser = async (req, res) => {
     // #swagger.tags = ['Users']
     // #swagger.security = [{ "googleOAuth": ["profile", "email"] }]
+    // #swagger.description = 'Update an existing user by ID.'
+    // #swagger.summary = 'Update user by ID'
     try {
         const updatedUser = await User.findByIdAndUpdate(
             req.params.id,
@@ -101,6 +109,8 @@ userController.updateUser = async (req, res) => {
 userController.deleteUser = async (req, res) => {
     // #swagger.tags = ['Users']
     // #swagger.security = [{ "googleOAuth": ["profile", "email"] }]
+    // #swagger.description = 'Delete a user by ID.'
+    // #swagger.summary = 'Delete user by ID'
     try {
         const deletedUser = await User.deleteOne({ _id: req.params.id });
 
@@ -121,6 +131,8 @@ userController.deleteUser = async (req, res) => {
 userController.toggleAdmin = async (req, res) => {
     // #swagger.tags = ['Users']
     // #swagger.security = [{ "googleOAuth": ["profile", "email"] }]
+    // #swagger.description = "Toggle a user's admin status."
+    // #swagger.summary = "Toggle user's admin status"
     try {
         const user = await User.findById(req.params.id);
 

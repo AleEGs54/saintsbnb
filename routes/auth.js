@@ -8,7 +8,8 @@ const router = express.Router()
 
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }), (req, res) => {
   // #swagger.tags = ['Auth']
-  // #swagger.description = 'Google authentication route'
+  // #swagger.description = 'Initiate Google OAuth login'
+  // #swagger.summary = 'Initiate Google OAuth login'
 });
 
 router.get(
@@ -16,7 +17,8 @@ router.get(
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
     // #swagger.tags = ['Auth']
-  // #swagger.description = 'Google authentication callback'
+    // #swagger.description = 'Google OAuth callback for authentication'
+    // #swagger.summary = 'Handle Google OAuth callback'
     req.session.user = req.user;
     
     res.redirect('/api-docs');
@@ -25,7 +27,8 @@ router.get(
 
 router.get('/logout', (req, res, next) => {
   // #swagger.tags = ['Auth']
-  // #swagger.description = 'Google authentication logout'
+  // #swagger.description = 'Logout the current user and clear session'
+  // #swagger.summary = 'Logout the current user and clear session'
   req.logout((error) => {
     if (error) return next(error);
 
