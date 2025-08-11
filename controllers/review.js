@@ -9,7 +9,6 @@ reviewController.getAll = async (req, res) => {
     // #swagger.summary = 'Get all reviews'
     try {
         const result = await Review.find();
-        console.log(result)
         if (result.length === 0) {
             return res.status(404).json({ message: 'No reviews found' });
         }
