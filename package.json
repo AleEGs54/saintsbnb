@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
+    "prestart": "node ./swagger.js",
     "start": "nodemon server.js",
     "swagger": "node ./swagger.js",
     "lint": "eslint .",
