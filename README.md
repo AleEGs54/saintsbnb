@@ -76,6 +76,7 @@ Kindly share the variables so we all can use them.
 ### Contributors
 
 - Alejandro Esteves
+- Aaron Lopez
 - Gabriel Scuzziato
 - Grace Ayuso
 - Luis Lizano
