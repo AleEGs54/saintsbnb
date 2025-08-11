@@ -43,6 +43,7 @@ reservationController.getById = async (req, res) => {
 // Create new reservation
 reservationController.createReservation = async (req, res) => {
     // #swagger.tags = ['Reservations']
+    // #swagger.security = [{ "googleOAuth": ["profile", "email"] }]
     try {
         const newReservation = await Reservation.create(
             {
@@ -66,6 +67,7 @@ reservationController.createReservation = async (req, res) => {
 // Update reservation
 reservationController.updateReservation = async (req, res) => {
     // #swagger.tags = ['Reservations']
+    // #swagger.security = [{ "googleOAuth": ["profile", "email"] }]
     try {
         const updatedReservation = await Reservation.findByIdAndUpdate(
             req.params.id,
@@ -98,6 +100,7 @@ reservationController.updateReservation = async (req, res) => {
 // DELETE reservation
 reservationController.deleteReservation = async (req, res) => {
     // #swagger.tags = ['Reservations']
+    // #swagger.security = [{ "googleOAuth": ["profile", "email"] }]
     try {
         const deletedReservation = await Reservation.findByIdAndDelete(req.params.id);
 

@@ -42,6 +42,7 @@ userController.getById = async (req, res) => {
 // POST new User
 userController.createUser = async (req, res) => {
     // #swagger.tags = ['Users']
+    // #swagger.security = [{ "googleOAuth": ["profile", "email"] }]
     try {
         const newUser = await User.create({
             googleId: req.body.googleId,
@@ -66,6 +67,7 @@ userController.createUser = async (req, res) => {
 // PUT update User
 userController.updateUser = async (req, res) => {
     // #swagger.tags = ['Users']
+    // #swagger.security = [{ "googleOAuth": ["profile", "email"] }]
     try {
         const updatedUser = await User.findByIdAndUpdate(
             req.params.id,
@@ -98,6 +100,7 @@ userController.updateUser = async (req, res) => {
 // DELETE User
 userController.deleteUser = async (req, res) => {
     // #swagger.tags = ['Users']
+    // #swagger.security = [{ "googleOAuth": ["profile", "email"] }]
     try {
         const deletedUser = await User.deleteOne({ _id: req.params.id });
 
@@ -117,6 +120,7 @@ userController.deleteUser = async (req, res) => {
 // PATCH toggle user's admin status
 userController.toggleAdmin = async (req, res) => {
     // #swagger.tags = ['Users']
+    // #swagger.security = [{ "googleOAuth": ["profile", "email"] }]
     try {
         const user = await User.findById(req.params.id);
 

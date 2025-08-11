@@ -42,6 +42,7 @@ reviewController.getById = async (req, res) => {
 // POST new review
 reviewController.createReview = async (req, res) => {
     // #swagger.tags = ['Reviews']
+    // #swagger.security = [{ "googleOAuth": ["profile", "email"] }]
     try {
         const newReview = await Review.create({
             user_id: req.body.user_id,
@@ -63,6 +64,7 @@ reviewController.createReview = async (req, res) => {
 // PUT update Review
 reviewController.updateReview = async (req, res) => {
     // #swagger.tags = ['Reviews']
+    // #swagger.security = [{ "googleOAuth": ["profile", "email"] }]
     try {
         const updatedReview = await Review.findByIdAndUpdate(
             req.params.id,
@@ -92,6 +94,7 @@ reviewController.updateReview = async (req, res) => {
 // DELETE review
 reviewController.deleteReview = async (req, res) => {
     // #swagger.tags = ['Reviews']
+    // #swagger.security = [{ "googleOAuth": ["profile", "email"] }]
     try {
         const deletedReview = await Review.deleteOne({ _id: req.params.id });
 

@@ -5,10 +5,50 @@
     "description": "Api for SaintsBnB to display endpoints available and ready for consumption",
     "version": "1.0.0"
   },
-  "host": "saintsbnb.onrender.com",
+  "host": "localhost:3000",
   "basePath": "/",
+  "tags": [
+    {
+      "name": "Posts",
+      "description": "Operations related to property posts"
+    },
+    {
+      "name": "Reservations",
+      "description": "Reservation operations"
+    },
+    {
+      "name": "Users",
+      "description": "User account operations"
+    },
+    {
+      "name": "Reviews",
+      "description": "Reviews in posts operations"
+    },
+    {
+      "name": "Auth",
+      "description": "Authentication operations"
+    }
+  ],
   "schemes": [
-    "https"
+    "http"
+  ],
+  "securityDefinitions": {
+    "googleOAuth": {
+      "type": "oauth2",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+      "flow": "accessCode",
+      "tokenUrl": "https://oauth2.googleapis.com/token",
+      "scopes": {
+        "profile": "View your profile",
+        "email": "View your email address"
+      }
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
   ],
   "paths": {
     "/": {
@@ -111,7 +151,15 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "googleOAuth": [
+              "profile",
+              "email"
+            ]
+          }
+        ]
       }
     },
     "/posts/{id}": {
@@ -205,7 +253,15 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "googleOAuth": [
+              "profile",
+              "email"
+            ]
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -236,7 +292,15 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "googleOAuth": [
+              "profile",
+              "email"
+            ]
+          }
+        ]
       }
     },
     "/posts/location/{location}": {
@@ -337,7 +401,15 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "googleOAuth": [
+              "profile",
+              "email"
+            ]
+          }
+        ]
       }
     },
     "/reservations/{id}": {
@@ -425,7 +497,15 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "googleOAuth": [
+              "profile",
+              "email"
+            ]
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -456,7 +536,15 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "googleOAuth": [
+              "profile",
+              "email"
+            ]
+          }
+        ]
       }
     },
     "/reviews/": {
@@ -524,7 +612,15 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "googleOAuth": [
+              "profile",
+              "email"
+            ]
+          }
+        ]
       }
     },
     "/reviews/{id}": {
@@ -609,7 +705,15 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "googleOAuth": [
+              "profile",
+              "email"
+            ]
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -640,7 +744,15 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "googleOAuth": [
+              "profile",
+              "email"
+            ]
+          }
+        ]
       }
     },
     "/user/": {
@@ -717,7 +829,15 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "googleOAuth": [
+              "profile",
+              "email"
+            ]
+          }
+        ]
       }
     },
     "/user/{id}": {
@@ -811,7 +931,15 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "googleOAuth": [
+              "profile",
+              "email"
+            ]
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -842,7 +970,15 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "googleOAuth": [
+              "profile",
+              "email"
+            ]
+          }
+        ]
       }
     },
     "/user/{id}/toggle-admin": {
@@ -875,12 +1011,23 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "googleOAuth": [
+              "profile",
+              "email"
+            ]
+          }
+        ]
       }
     },
     "/auth/google": {
       "get": {
-        "description": "",
+        "tags": [
+          "Auth"
+        ],
+        "description": "Google authentication route",
         "responses": {
           "default": {
             "description": ""
@@ -890,7 +1037,10 @@
     },
     "/auth/google/callback": {
       "get": {
-        "description": "",
+        "tags": [
+          "Auth"
+        ],
+        "description": "Google authentication callback",
         "responses": {
           "default": {
             "description": ""
@@ -900,7 +1050,10 @@
     },
     "/auth/logout": {
       "get": {
-        "description": "",
+        "tags": [
+          "Auth"
+        ],
+        "description": "Google authentication logout",
         "responses": {
           "default": {
             "description": ""

@@ -60,6 +60,7 @@ postController.getByLocation = async (req, res) => {
 // POST new post
 postController.createPost = async (req, res) => {
     // #swagger.tags = ['Posts']
+    // #swagger.security = [{ "googleOAuth": ["profile", "email"] }]
     try {
         const newPost = await Post.create({
             user_id: req.body.user_id,
@@ -84,6 +85,7 @@ postController.createPost = async (req, res) => {
 // PUT update post
 postController.updatePost = async (req, res) => {
     // #swagger.tags = ['Posts']
+    // #swagger.security = [{ "googleOAuth": ["profile", "email"] }]
     try {
         const updatedPost = await Post.findByIdAndUpdate(
             req.params.id,
@@ -116,6 +118,7 @@ postController.updatePost = async (req, res) => {
 // DELETE post
 postController.deletePost = async (req, res) => {
     // #swagger.tags = ['Posts']
+    // #swagger.security = [{ "googleOAuth": ["profile", "email"] }]
     try {
         const deletedPost = await Post.deleteOne({ _id: req.params.id });
 
