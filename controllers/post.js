@@ -9,7 +9,6 @@ postController.getAll = async (req, res) => {
     // #swagger.summary = 'Get all posts'
     try {
         const result = await Post.find();
-        console.log(result)
         if (result.length === 0) {
             return res.status(404).json({ message: 'No posts found' });
         }
