@@ -5,6 +5,8 @@ const reservationController = {};
 // Get all reservations
 reservationController.getReservation = async (req, res) => {
     // #swagger.tags = ['Reservations']
+    // #swagger.description = 'Retrieve a list of all reservations/bookings.'
+    // #swagger.summary = 'Get all reservations'
     try {
         const result = await Reservation.find();
 
@@ -24,6 +26,8 @@ reservationController.getReservation = async (req, res) => {
 // Get reservation by ID
 reservationController.getById = async (req, res) => {
     // #swagger.tags = ['Reservations']
+    // #swagger.description = 'Retrieve a specific reservation/booking by its ID.'
+    // #swagger.summary = 'Get reservation by ID'
     try {
         const result = await Reservation.findById(req.params.id);
 
@@ -43,6 +47,9 @@ reservationController.getById = async (req, res) => {
 // Create new reservation
 reservationController.createReservation = async (req, res) => {
     // #swagger.tags = ['Reservations']
+    // #swagger.security = [{ "googleOAuth": ["profile", "email"] }]
+    // #swagger.description = 'Create a new reservation/booking.'
+    // #swagger.summary = 'Create a new reservation'
     try {
         const newReservation = await Reservation.create(
             {
@@ -66,6 +73,9 @@ reservationController.createReservation = async (req, res) => {
 // Update reservation
 reservationController.updateReservation = async (req, res) => {
     // #swagger.tags = ['Reservations']
+    // #swagger.security = [{ "googleOAuth": ["profile", "email"] }]
+    // #swagger.description = 'Update an existing reservation/booking by ID.'
+    // #swagger.summary = 'Update reservation by ID'
     try {
         const updatedReservation = await Reservation.findByIdAndUpdate(
             req.params.id,
@@ -98,6 +108,9 @@ reservationController.updateReservation = async (req, res) => {
 // DELETE reservation
 reservationController.deleteReservation = async (req, res) => {
     // #swagger.tags = ['Reservations']
+    // #swagger.security = [{ "googleOAuth": ["profile", "email"] }]
+    // #swagger.description = 'Delete a reservation/booking by ID.'
+    // #swagger.summary = 'Delete reservation by ID'
     try {
         const deletedReservation = await Reservation.findByIdAndDelete(req.params.id);
 

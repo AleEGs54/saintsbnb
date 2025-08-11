@@ -5,6 +5,8 @@ const postController = {};
 // GET all posts
 postController.getAll = async (req, res) => {
     // #swagger.tags = ['Posts']
+    // #swagger.description = 'Retrieve a list of all posts.'
+    // #swagger.summary = 'Get all posts'
     try {
         const result = await Post.find();
         console.log(result)
@@ -24,6 +26,8 @@ postController.getAll = async (req, res) => {
 // GET post by ID
 postController.getById = async (req, res) => {
     // #swagger.tags = ['Posts']
+    // #swagger.description = 'Retrieve a post by its ID.'
+    // #swagger.summary = 'Get post by ID'
     try {
         const result = await Post.findById(req.params.id);
         if (result) {
@@ -42,6 +46,8 @@ postController.getById = async (req, res) => {
 // GET posts by location
 postController.getByLocation = async (req, res) => {
     // #swagger.tags = ['Posts']
+    // #swagger.description = 'Retrieve posts filtered by location.'
+    // #swagger.summary = 'Get posts by location'
     try {
         const result = await Post.find({ location: req.params.location });
         if (result.length > 0) {
@@ -60,6 +66,9 @@ postController.getByLocation = async (req, res) => {
 // POST new post
 postController.createPost = async (req, res) => {
     // #swagger.tags = ['Posts']
+    // #swagger.security = [{ "googleOAuth": ["profile", "email"] }]
+    // #swagger.description = 'Create a new post.'
+    // #swagger.summary = 'Create a new post'
     try {
         const newPost = await Post.create({
             user_id: req.body.user_id,
@@ -84,6 +93,9 @@ postController.createPost = async (req, res) => {
 // PUT update post
 postController.updatePost = async (req, res) => {
     // #swagger.tags = ['Posts']
+    // #swagger.security = [{ "googleOAuth": ["profile", "email"] }]
+    // #swagger.description = 'Update an existing post by ID.'
+    // #swagger.summary = 'Update post by ID'
     try {
         const updatedPost = await Post.findByIdAndUpdate(
             req.params.id,
@@ -116,6 +128,9 @@ postController.updatePost = async (req, res) => {
 // DELETE post
 postController.deletePost = async (req, res) => {
     // #swagger.tags = ['Posts']
+    // #swagger.security = [{ "googleOAuth": ["profile", "email"] }]
+    // #swagger.description = 'Delete a post by ID.'
+    // #swagger.summary = 'Delete post by ID'
     try {
         const deletedPost = await Post.deleteOne({ _id: req.params.id });
 

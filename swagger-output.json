@@ -5,10 +5,50 @@
     "description": "Api for SaintsBnB to display endpoints available and ready for consumption",
     "version": "1.0.0"
   },
-  "host": "saintsbnb.onrender.com",
+  "host": "localhost:3000",
   "basePath": "/",
+  "tags": [
+    {
+      "name": "Posts",
+      "description": "Operations related to property posts"
+    },
+    {
+      "name": "Reservations",
+      "description": "Reservation operations"
+    },
+    {
+      "name": "Users",
+      "description": "User account operations"
+    },
+    {
+      "name": "Reviews",
+      "description": "Reviews in posts operations"
+    },
+    {
+      "name": "Auth",
+      "description": "Authentication operations"
+    }
+  ],
   "schemes": [
-    "https"
+    "http"
+  ],
+  "securityDefinitions": {
+    "googleOAuth": {
+      "type": "oauth2",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+      "flow": "accessCode",
+      "tokenUrl": "https://oauth2.googleapis.com/token",
+      "scopes": {
+        "profile": "View your profile",
+        "email": "View your email address"
+      }
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
   ],
   "paths": {
     "/": {
@@ -42,7 +82,8 @@
         "tags": [
           "Posts"
         ],
-        "description": "",
+        "summary": "Get all posts",
+        "description": "Retrieve a list of all posts.",
         "responses": {
           "200": {
             "description": "OK"
@@ -62,7 +103,8 @@
         "tags": [
           "Posts"
         ],
-        "description": "",
+        "summary": "Create a new post",
+        "description": "Create a new post.",
         "parameters": [
           {
             "name": "body",
@@ -111,7 +153,15 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "googleOAuth": [
+              "profile",
+              "email"
+            ]
+          }
+        ]
       }
     },
     "/posts/{id}": {
@@ -119,7 +169,8 @@
         "tags": [
           "Posts"
         ],
-        "description": "",
+        "summary": "Get post by ID",
+        "description": "Retrieve a post by its ID.",
         "parameters": [
           {
             "name": "id",
@@ -147,7 +198,8 @@
         "tags": [
           "Posts"
         ],
-        "description": "",
+        "summary": "Update post by ID",
+        "description": "Update an existing post by ID.",
         "parameters": [
           {
             "name": "id",
@@ -205,13 +257,22 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "googleOAuth": [
+              "profile",
+              "email"
+            ]
+          }
+        ]
       },
       "delete": {
         "tags": [
           "Posts"
         ],
-        "description": "",
+        "summary": "Delete post by ID",
+        "description": "Delete a post by ID.",
         "parameters": [
           {
             "name": "id",
@@ -236,7 +297,15 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "googleOAuth": [
+              "profile",
+              "email"
+            ]
+          }
+        ]
       }
     },
     "/posts/location/{location}": {
@@ -244,7 +313,8 @@
         "tags": [
           "Posts"
         ],
-        "description": "",
+        "summary": "Get posts by location",
+        "description": "Retrieve posts filtered by location.",
         "parameters": [
           {
             "name": "location",
@@ -274,7 +344,8 @@
         "tags": [
           "Reservations"
         ],
-        "description": "",
+        "summary": "Get all reservations",
+        "description": "Retrieve a list of all reservations/bookings.",
         "responses": {
           "200": {
             "description": "OK"
@@ -294,7 +365,8 @@
         "tags": [
           "Reservations"
         ],
-        "description": "",
+        "summary": "Create a new reservation",
+        "description": "Create a new reservation/booking.",
         "parameters": [
           {
             "name": "body",
@@ -337,7 +409,15 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "googleOAuth": [
+              "profile",
+              "email"
+            ]
+          }
+        ]
       }
     },
     "/reservations/{id}": {
@@ -345,7 +425,8 @@
         "tags": [
           "Reservations"
         ],
-        "description": "",
+        "summary": "Get reservation by ID",
+        "description": "Retrieve a specific reservation/booking by its ID.",
         "parameters": [
           {
             "name": "id",
@@ -373,7 +454,8 @@
         "tags": [
           "Reservations"
         ],
-        "description": "",
+        "summary": "Update reservation by ID",
+        "description": "Update an existing reservation/booking by ID.",
         "parameters": [
           {
             "name": "id",
@@ -425,13 +507,22 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "googleOAuth": [
+              "profile",
+              "email"
+            ]
+          }
+        ]
       },
       "delete": {
         "tags": [
           "Reservations"
         ],
-        "description": "",
+        "summary": "Delete reservation by ID",
+        "description": "Delete a reservation/booking by ID.",
         "parameters": [
           {
             "name": "id",
@@ -456,7 +547,15 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "googleOAuth": [
+              "profile",
+              "email"
+            ]
+          }
+        ]
       }
     },
     "/reviews/": {
@@ -464,7 +563,8 @@
         "tags": [
           "Reviews"
         ],
-        "description": "",
+        "summary": "Get all reviews",
+        "description": "Retrieve a list of all reviews.",
         "responses": {
           "200": {
             "description": "OK"
@@ -484,7 +584,8 @@
         "tags": [
           "Reviews"
         ],
-        "description": "",
+        "summary": "Create a new review",
+        "description": "Create a new review.",
         "parameters": [
           {
             "name": "body",
@@ -524,7 +625,15 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "googleOAuth": [
+              "profile",
+              "email"
+            ]
+          }
+        ]
       }
     },
     "/reviews/{id}": {
@@ -532,7 +641,8 @@
         "tags": [
           "Reviews"
         ],
-        "description": "",
+        "summary": "Get review by ID",
+        "description": "Retrieve a specific review by its ID.",
         "parameters": [
           {
             "name": "id",
@@ -560,7 +670,8 @@
         "tags": [
           "Reviews"
         ],
-        "description": "",
+        "summary": "Update review by ID",
+        "description": "Update an existing review by ID.",
         "parameters": [
           {
             "name": "id",
@@ -609,13 +720,22 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "googleOAuth": [
+              "profile",
+              "email"
+            ]
+          }
+        ]
       },
       "delete": {
         "tags": [
           "Reviews"
         ],
-        "description": "",
+        "summary": "Delete review by ID",
+        "description": "Delete a review by ID.",
         "parameters": [
           {
             "name": "id",
@@ -640,7 +760,15 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "googleOAuth": [
+              "profile",
+              "email"
+            ]
+          }
+        ]
       }
     },
     "/user/": {
@@ -648,7 +776,8 @@
         "tags": [
           "Users"
         ],
-        "description": "",
+        "summary": "Get all users",
+        "description": "Retrieve a list of all users.",
         "responses": {
           "200": {
             "description": "OK"
@@ -668,7 +797,8 @@
         "tags": [
           "Users"
         ],
-        "description": "",
+        "summary": "Create a new user",
+        "description": "Create a new user.",
         "parameters": [
           {
             "name": "body",
@@ -717,7 +847,15 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "googleOAuth": [
+              "profile",
+              "email"
+            ]
+          }
+        ]
       }
     },
     "/user/{id}": {
@@ -725,7 +863,8 @@
         "tags": [
           "Users"
         ],
-        "description": "",
+        "summary": "Get user by ID",
+        "description": "Retrieve a specific user by their ID.",
         "parameters": [
           {
             "name": "id",
@@ -753,7 +892,8 @@
         "tags": [
           "Users"
         ],
-        "description": "",
+        "summary": "Update user by ID",
+        "description": "Update an existing user by ID.",
         "parameters": [
           {
             "name": "id",
@@ -811,13 +951,22 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "googleOAuth": [
+              "profile",
+              "email"
+            ]
+          }
+        ]
       },
       "delete": {
         "tags": [
           "Users"
         ],
-        "description": "",
+        "summary": "Delete user by ID",
+        "description": "Delete a user by ID.",
         "parameters": [
           {
             "name": "id",
@@ -842,7 +991,15 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "googleOAuth": [
+              "profile",
+              "email"
+            ]
+          }
+        ]
       }
     },
     "/user/{id}/toggle-admin": {
@@ -850,7 +1007,8 @@
         "tags": [
           "Users"
         ],
-        "description": "",
+        "summary": "Toggle user's admin status",
+        "description": "Toggle a user's admin status.",
         "parameters": [
           {
             "name": "id",
@@ -875,12 +1033,24 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "googleOAuth": [
+              "profile",
+              "email"
+            ]
+          }
+        ]
       }
     },
     "/auth/google": {
       "get": {
-        "description": "",
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Initiate Google OAuth login",
+        "description": "Initiate Google OAuth login",
         "responses": {
           "default": {
             "description": ""
@@ -890,7 +1060,11 @@
     },
     "/auth/google/callback": {
       "get": {
-        "description": "",
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Handle Google OAuth callback",
+        "description": "Google OAuth callback for authentication",
         "responses": {
           "default": {
             "description": ""
@@ -900,7 +1074,11 @@
     },
     "/auth/logout": {
       "get": {
-        "description": "",
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Logout the current user and clear session",
+        "description": "Logout the current user and clear session",
         "responses": {
           "default": {
             "description": ""

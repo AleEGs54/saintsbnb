@@ -5,6 +5,8 @@ const reviewController = {};
 // GET all reviews
 reviewController.getAll = async (req, res) => {
     // #swagger.tags = ['Reviews']
+    // #swagger.description = 'Retrieve a list of all reviews.'
+    // #swagger.summary = 'Get all reviews'
     try {
         const result = await Review.find();
         console.log(result)
@@ -24,6 +26,8 @@ reviewController.getAll = async (req, res) => {
 // GET review by ID
 reviewController.getById = async (req, res) => {
     // #swagger.tags = ['Reviews']
+    // #swagger.description = 'Retrieve a specific review by its ID.'
+    // #swagger.summary = 'Get review by ID'
     try {
         const result = await Review.findById(req.params.id);
         if (result) {
@@ -42,6 +46,9 @@ reviewController.getById = async (req, res) => {
 // POST new review
 reviewController.createReview = async (req, res) => {
     // #swagger.tags = ['Reviews']
+    // #swagger.security = [{ "googleOAuth": ["profile", "email"] }]
+    // #swagger.description = 'Create a new review.'
+    // #swagger.summary = 'Create a new review'
     try {
         const newReview = await Review.create({
             user_id: req.body.user_id,
@@ -63,6 +70,9 @@ reviewController.createReview = async (req, res) => {
 // PUT update Review
 reviewController.updateReview = async (req, res) => {
     // #swagger.tags = ['Reviews']
+    // #swagger.security = [{ "googleOAuth": ["profile", "email"] }]
+    // #swagger.description = 'Update an existing review by ID.'
+    // #swagger.summary = 'Update review by ID'
     try {
         const updatedReview = await Review.findByIdAndUpdate(
             req.params.id,
@@ -92,6 +102,9 @@ reviewController.updateReview = async (req, res) => {
 // DELETE review
 reviewController.deleteReview = async (req, res) => {
     // #swagger.tags = ['Reviews']
+    // #swagger.security = [{ "googleOAuth": ["profile", "email"] }]
+    // #swagger.description = 'Delete a review by ID.'
+    // #swagger.summary = 'Delete review by ID'
     try {
         const deletedReview = await Review.deleteOne({ _id: req.params.id });
 
