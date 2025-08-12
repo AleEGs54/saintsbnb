@@ -655,6 +655,12 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "housingId": {
+                    "example": "any"
+                  },
+                  "userId": {
+                    "example": "any"
+                  },
                   "status": {
                     "example": "any"
                   },

@@ -83,11 +83,25 @@ exports.updateBooking = async (req, res, next) => {
             });
         }
 
-        const { status, checkInDate, checkOutDate, totalPrice } = req.body;
+        const {
+            housingId,
+            userId,
+            status,
+            checkInDate,
+            checkOutDate,
+            totalPrice,
+        } = req.body;
 
         const updated = await Booking.findByIdAndUpdate(
             req.params.id,
-            { status, checkInDate, checkOutDate, totalPrice },
+            {
+                housingId,
+                userId,
+                status,
+                checkInDate,
+                checkOutDate,
+                totalPrice,
+            },
             { new: true, runValidators: true },
         );
         if (!updated) {
