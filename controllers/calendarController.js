@@ -1,4 +1,5 @@
 const Calendar = require('../models/calendarModel');
+const Housing = require('../models/housingModel');
 
 exports.createCalendarEntry = async (req, res, next) => {
     try {
