@@ -1,3 +1,5 @@
+// .ENV is not showing in github
+
 // UNIT TEST
 
 // LOGIN WITH GITHUB
@@ -29,8 +31,8 @@
 // POST /users/login
 
 {
-  "email": "login@login.com",
-  "password": "any"
+  "email": "testuser@example.com",
+  "password": "Test1234"
 }
 
 {
@@ -101,3 +103,53 @@
 // DELETE /housing/{id}
 
 // GET /housing/
+
+// POST /booking/
+
+{
+  "housingId": "",
+  "userId": "",
+  "checkInDate": "2025-09-01T14:00:00Z",
+  "checkOutDate": "2025-09-10T11:00:00Z",
+  "status": "pending",
+  "totalPrice": 1500.00
+}
+
+{
+  "housingId": "",
+  "userId": "",
+  "checkInDate": "2025-09-01T14:00:00Z",
+  "checkOutDate": "2025-09-10T11:00:00Z",
+  "status": "pending",
+  "totalPrice": 1500.00
+}
+
+// GET /booking/{id}
+
+// PUT /booking/{id}
+
+// GET /booking/user/{userId}
+
+// DELETE /booking/{id}
+
+// GET /booking/housing/{housingId}
+
+// POST /calendar/
+
+{
+  "housingId": "",
+  "date": "2026-09-01",
+  "available": true
+}
+
+{
+  "housingId": "",
+  "date": "2026-10-01",
+  "available": true
+}
+
+// GET /calendar/housing/{housingId}
+
+// DELETE /calendar/{id}
+
+// GET /calendar/housing/{housingId}
