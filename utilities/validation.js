@@ -147,6 +147,11 @@ const housingValidationRules = [
 ];
 
 const bookingValidationRules = [
+      body('id')
+    .notEmpty()
+    .withMessage('Booking ID is required.')
+    .isMongoId()
+    .withMessage('Booking ID must be a valid Mongo ID.')
     body('housingId')
         .notEmpty()
         .withMessage('Housing ID is required.')
