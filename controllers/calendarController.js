@@ -39,7 +39,7 @@ exports.updateCalendarEntry = async (req, res, next) => {
                 .json({ message: 'Calendar entry not found' });
         }
 
-        const housing = await Housing.findById(entry.housingId);
+        const housing = await housing.findById(entry.housingId);
 
         if (!housing) {
             return res
@@ -54,10 +54,10 @@ exports.updateCalendarEntry = async (req, res, next) => {
             });
         }
 
-        const { checkInDate, checkOutDate } = req.body;
+        const { housingId, date, available } = req.body;
         const updated = await Calendar.findByIdAndUpdate(
             req.params.id,
-            { checkInDate, checkOutDate },
+            { housingId, date, available },
             { new: true, runValidators: true },
         );
         if (!updated) {
