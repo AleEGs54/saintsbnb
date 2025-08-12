@@ -848,10 +848,13 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "checkInDate": {
+                  "housingId": {
                     "example": "any"
                   },
-                  "checkOutDate": {
+                  "date": {
+                    "example": "any"
+                  },
+                  "available": {
                     "example": "any"
                   }
                 }
