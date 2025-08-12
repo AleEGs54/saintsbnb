@@ -1,7 +1,7 @@
-// routes/index.js
+
 const router = require('express').Router();
 
-// Swagger & feature routes
+
 router.use('/api-docs', require('./swagger'));
 router.use('/posts', require('./post'));
 router.use('/reservations', require('./reservation'));

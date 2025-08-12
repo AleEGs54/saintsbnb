@@ -1,13 +1,9 @@
-// routes/auth.js
 const express = require('express');
 const passport = require('passport');
 
 const router = express.Router();
 
-/* ---------------------------
-   OPTIONAL GOOGLE ROUTES
-   Only mount if all Google env vars exist
---------------------------- */
+
 const hasGoogle =
   process.env.GOOGLE_CLIENT_ID &&
   process.env.GOOGLE_CLIENT_SECRET &&
@@ -27,9 +23,7 @@ if (hasGoogle) {
   );
 }
 
-/* ---------------------------
-   GITHUB ROUTES (PRIMARY)
---------------------------- */
+
 const hasGithub =
   process.env.GITHUB_CLIENT_ID &&
   process.env.GITHUB_CLIENT_SECRET &&
@@ -43,7 +37,7 @@ router.get('/login', (req, res, next) => {
   return passport.authenticate('github')(req, res, next);
 });
 
-// GitHub OAuth callback (must match GITHUB_CALLBACK_URL exactly)
+
 router.get(
   '/github/callback',
   (req, res, next) => {
@@ -62,11 +56,7 @@ router.get(
   }
 );
 
-/* ---------------------------
-   UTIL ROUTES
---------------------------- */
 
-// Check current auth state
 router.get('/me', (req, res) => {
   if (req.isAuthenticated && req.isAuthenticated()) {
     return res.json({ loggedIn: true, user: req.user });

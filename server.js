@@ -13,7 +13,6 @@ const { connectDB } = require('./database/index');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// ---------- Middleware ----------
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -43,7 +42,7 @@ passport.use(new GitHubStrategy(
   {
     clientID: process.env.GITHUB_CLIENT_ID,               // required
     clientSecret: process.env.GITHUB_CLIENT_SECRET,       // required
-    callbackURL: process.env.GITHUB_CALLBACK_URL || 'http://localhost:3000/auth/github/callback' // required
+    callbackURL: process.env.GITHUB_CALLBACK_URL || 'http://localhost:3000/auth/github/callback' 
   },
   (accessToken, refreshToken, profile, done) => {
     // You can persist user here if you want; for now just pass the profile through
@@ -81,13 +80,8 @@ app.get('/logout', (req, res, next) => {
   });
 });
 
-// ---------- Your app routes ----------
-/**
- * If you already have /auth routes in ./routes/auth that include Google,
- * keep them commented while you test GitHub-only to avoid conflicts.
- *
- * // app.use('/auth', require('./routes/auth'));
- */
+
+ 
 app.use('/', require('./routes'));
 
 // 404
@@ -107,7 +101,7 @@ process.on('uncaughtException', (err, origin) => {
   console.error(`Uncaught exception: ${err}\nOrigin: ${origin}`);
 });
 
-// ---------- Start ----------
+
 connectDB()
   .then(() => {
     app.listen(port, () => {
