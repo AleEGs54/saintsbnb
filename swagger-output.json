@@ -121,6 +121,9 @@
                 "availability": {
                   "example": "any"
                 },
+                "description": {
+                  "example": "any"
+                },
                 "owner": {
                   "example": "any"
                 },
@@ -222,6 +225,9 @@
                 "availability": {
                   "example": "any"
                 },
+                "description": {
+                  "example": "any"
+                },
                 "owner": {
                   "example": "any"
                 },
@@ -318,6 +324,37 @@
         "parameters": [
           {
             "name": "location",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/posts/availability/{status}": {
+      "get": {
+        "tags": [
+          "Posts"
+        ],
+        "summary": "Get posts by availability",
+        "description": "Retrieve posts filtered by availability.Parameter: true = available, false = not available.",
+        "parameters": [
+          {
+            "name": "status",
             "in": "path",
             "required": true,
             "type": "string"

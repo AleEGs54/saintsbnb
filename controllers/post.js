@@ -62,6 +62,31 @@ postController.getByLocation = async (req, res) => {
     }
 };
 
+// GET posts by availability
+postController.getByAvailability = async (req, res) => {
+    // #swagger.tags = ['Posts']
+    // #swagger.description = 'Retrieve posts filtered by availability.Parameter: true = available, false = not available.'
+    // #swagger.summary = 'Get posts by availability'
+    try {
+
+        if (req.params.status !== 'true' && req.params.status !== 'false') {
+            return res.status(404).json({ message: 'Invalid availability status. Must be either true or false.' });
+        }
+
+        const result = await Post.find({ availability: req.params.status });
+        if (result.length > 0) {
+            return res.status(200).json(result);
+        }
+        res.status(404).json({ message: 'No posts found for this availability' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            message: 'Error fetching posts by availability',
+            error: err.message,
+        });
+    }
+};
+
 // POST new post
 postController.createPost = async (req, res) => {
     // #swagger.tags = ['Posts']
@@ -73,6 +98,7 @@ postController.createPost = async (req, res) => {
             user_id: req.body.user_id,
             rooms: req.body.rooms,
             availability: req.body.availability,
+            description: req.body.description,
             owner: req.body.owner,
             price: req.body.price,
             address: req.body.address,
@@ -102,6 +128,7 @@ postController.updatePost = async (req, res) => {
                 user_id: req.body.user_id,
                 rooms: req.body.rooms,
                 availability: req.body.availability,
+                description: req.body.description,
                 owner: req.body.owner,
                 price: req.body.price,
                 address: req.body.address,
