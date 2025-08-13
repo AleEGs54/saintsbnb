@@ -29,6 +29,7 @@ Make sure another team member reviews and approves before merging.
 - `npm run swagger` to generate a swagger-output.json
 - `npm run lint` to look for warnings across the code.
 - `npm run fix` to fix most warnings.
+- `npm run test` to test.
 
 ### API Documentation
 
@@ -77,9 +78,18 @@ Kindly share the variables so we all can use them.
 ### Contributors
 
 - Alejandro Esteves
+- Aaron Lopez
 - Gabriel Scuzziato
 - Grace Ayuso
 - Luis Lizano
 - Trystan Jones
 - Natnael Gashaw
 - Aaron Lopez
+
+
+
+### Endpoint Notes
+
+To use the google login, you will have to hit this endpoint: /auth/google
+To log out: /auth/logout
+It's still a little broken, I'm working on it

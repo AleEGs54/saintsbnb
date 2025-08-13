@@ -82,10 +82,20 @@ app.get('/logout', (req, res, next) => {
 
 
  
+
+// Auth Route FIRST to ensure /auth/... paths are handled
+app.use('/auth', require('./routes/auth'));
+
+// Then Main routes
 app.use('/', require('./routes'));
 
-// 404
-app.use((req, res) => res.status(404).json({ message: '404: Route not found' }));
+
+
+// 404 Handler
+app.use((req, res) => {
+  res.status(404).json({ message: '404: Route not found' });
+});
+
 
 // Error handler
 app.use((err, req, res, next) => {
@@ -112,3 +122,6 @@ connectDB()
     console.error('❌ Failed to connect to database:', err);
     process.exit(1);
   });
+
+  module.exports = { app }; // Export the app for testing purposes
+
