@@ -7,6 +7,7 @@ const {isAuthenticated, handleValidation} = require('../utilities/auth');
 router.get('/', handleValidation, postController.getAll);
 router.get('/:id', handleValidation, postController.getById);
 router.get('/location/:location', handleValidation, postController.getByLocation);
+router.get('/availability/:status', handleValidation, postController.getByAvailability);
 
 // Protected routes (authentication required)
 router.post('/', isAuthenticated, handleValidation, postController.createPost);
