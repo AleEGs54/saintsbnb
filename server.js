@@ -1,22 +1,22 @@
-
 require('dotenv').config();
 
-const express = require('express');
-const cors = require('cors');
-const session = require('express-session');
+const express   = require('express');
+const cors      = require('cors');
+const session   = require('express-session');
 const bodyParser = require('body-parser');
-const passport = require('passport');
+const passport  = require('passport');
 const GitHubStrategy = require('passport-github2').Strategy;
 
 const { connectDB } = require('./database/index');
 
-const app = express();
+const app  = express();
 const port = process.env.PORT || 3000;
 
+// ---------- Middleware ----------
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// CORS: use a specific origin when you need cookies (sessions)
+// CORS: specify origin when sending session cookies
 const ORIGIN = process.env.CORS_ORIGIN || 'http://localhost:3000';
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', ORIGIN);
@@ -31,73 +31,46 @@ app.use(cors({ origin: ORIGIN, credentials: true }));
 app.use(session({
   secret: process.env.SESSION_SECRET || 'dev-secret-change-me',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
 }));
 
-// Passport (GitHub only)
+// Initialise Passport
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.use(new GitHubStrategy(
-  {
-    clientID: process.env.GITHUB_CLIENT_ID,               // required
-    clientSecret: process.env.GITHUB_CLIENT_SECRET,       // required
-    callbackURL: process.env.GITHUB_CALLBACK_URL || 'http://localhost:3000/auth/github/callback' 
-  },
-  (accessToken, refreshToken, profile, done) => {
-    // You can persist user here if you want; for now just pass the profile through
+// Register GitHub strategy if configured
+if (process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET) {
+  passport.use(new GitHubStrategy({
+    clientID: process.env.GITHUB_CLIENT_ID,
+    clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    callbackURL: process.env.GITHUB_CALLBACK_URL || 'http://localhost:3000/auth/github/callback'
+  }, (accessToken, refreshToken, profile, done) => {
+    // For now, persist the whole GitHub profile as the user object
     return done(null, profile);
-  }
-));
+  }));
+}
 
+// Conditionally load the Google strategy only when all vars are set
+const hasGoogle =
+  process.env.GOOGLE_CLIENT_ID &&
+  process.env.GOOGLE_CLIENT_SECRET &&
+  process.env.GOOGLE_CALLBACK_URL;
+if (hasGoogle) {
+  require('./auth/passport')(passport);
+}
+
+// Simple (de)serialization: store entire user object
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((user, done) => done(null, user));
 
-// ---------- Basic routes ----------
-app.get('/', (req, res) => {
-  res.send(req.user ? `Logged in as ${req.user.username || req.user.displayName}` : 'Not logged in');
-});
+// ---------- Route Handling ----------
+app.use('/auth', require('./routes/auth'));   // login/logout/me endpoints
+app.use('/', require('./routes'));            // API routes, docs, home
 
-app.get('/me', (req, res) => {
-  if (req.isAuthenticated && req.isAuthenticated()) {
-    return res.json({ loggedIn: true, user: req.user });
-  }
-  return res.status(401).json({ loggedIn: false });
-});
+// 404 handler
+app.use((req, res) => res.status(404).json({ message: '404: Route not found' }));
 
-
-
-
-// Logout
-app.get('/logout', (req, res, next) => {
-  req.logout(err => {
-    if (err) return next(err);
-    if (req.session) {
-      req.session.destroy(() => res.redirect('/'));
-    } else {
-      res.redirect('/');
-    }
-  });
-});
-
-
- 
-
-// Auth Route FIRST to ensure /auth/... paths are handled
-app.use('/auth', require('./routes/auth'));
-
-// Then Main routes
-app.use('/', require('./routes'));
-
-
-
-// 404 Handler
-app.use((req, res) => {
-  res.status(404).json({ message: '404: Route not found' });
-});
-
-
-// Error handler
+// Global error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(err.status || 500).json({
@@ -106,12 +79,12 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Uncaught exceptions (last resort)
+// Uncaught exception handler
 process.on('uncaughtException', (err, origin) => {
   console.error(`Uncaught exception: ${err}\nOrigin: ${origin}`);
 });
 
-
+// ---------- Start Server ----------
 connectDB()
   .then(() => {
     app.listen(port, () => {
@@ -123,5 +96,4 @@ connectDB()
     process.exit(1);
   });
 
-  module.exports = { app }; // Export the app for testing purposes
-
+module.exports = { app };
