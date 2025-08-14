@@ -3,7 +3,7 @@
   "info": {
     "title": "SaintsBnB API",
     "description": "Api for SaintsBnB to display endpoints available and ready for consumption",
-    "version": "1.0.0"
+    "version": "1.0.52"
   },
   "host": "localhost:3000",
   "basePath": "/",
@@ -112,15 +112,33 @@
             "schema": {
               "type": "object",
               "properties": {
-    "user_id": { "type": "string", "example": "64f8f9f1b2c3456789abcdea" },
-    "rooms": { "type": "integer", "example": 3 },
-    "availability": { "type": "boolean", "default": false, "example": true },
-    "description": { "type": "string", "default": "No description", "example": "Cozy two-bedroom apartment near downtown" },
-    "owner": { "type": "string", "example": "John Doe" },
-    "price": { "type": "string", "example": "$1200/month" },
-    "address": { "type": "string", "example": "123 Main St, Springfield, USA" },
-    "max_occupants": { "type": "integer", "example": 4 },
-    "location": { "type": "string", "example": "Springfield" }
+                "user_id": {
+                  "example": "any"
+                },
+                "rooms": {
+                  "example": "any"
+                },
+                "availability": {
+                  "example": "any"
+                },
+                "description": {
+                  "example": "any"
+                },
+                "owner": {
+                  "example": "any"
+                },
+                "price": {
+                  "example": "any"
+                },
+                "address": {
+                  "example": "any"
+                },
+                "max_occupants": {
+                  "example": "any"
+                },
+                "location": {
+                  "example": "any"
+                }
               }
             }
           }
@@ -198,15 +216,33 @@
             "schema": {
               "type": "object",
               "properties": {
-                    "user_id": { "type": "string", "example": "64f8f9f1b2c3456789abcdea" },
-    "rooms": { "type": "integer", "example": 3 },
-    "availability": { "type": "boolean", "default": false, "example": true },
-    "description": { "type": "string", "default": "No description", "example": "Cozy two-bedroom apartment near downtown" },
-    "owner": { "type": "string", "example": "John Doe" },
-    "price": { "type": "string", "example": "$1200/month" },
-    "address": { "type": "string", "example": "123 Main St, Springfield, USA" },
-    "max_occupants": { "type": "integer", "example": 4 },
-    "location": { "type": "string", "example": "Springfield" }
+                "user_id": {
+                  "example": "any"
+                },
+                "rooms": {
+                  "example": "any"
+                },
+                "availability": {
+                  "example": "any"
+                },
+                "description": {
+                  "example": "any"
+                },
+                "owner": {
+                  "example": "any"
+                },
+                "price": {
+                  "example": "any"
+                },
+                "address": {
+                  "example": "any"
+                },
+                "max_occupants": {
+                  "example": "any"
+                },
+                "location": {
+                  "example": "any"
+                }
               }
             }
           }
@@ -375,12 +411,24 @@
             "schema": {
               "type": "object",
               "properties": {
-                   "post_id": { "type": "string", "example": "64f8f9f1b2c3456789abcdea" },
-    "user_id": { "type": "string", "example": "64f8f9f1b2c3456789abcded" },
-    "check_in_date": { "type": "string", "format": "date", "example": "2025-09-01" },
-    "check_out_date": { "type": "string", "format": "date", "example": "2025-09-07" },
-    "status": { "type": "string", "example": "confirmed" },
-    "total_price": { "type": "string", "example": "$800" }
+                "post_id": {
+                  "example": "any"
+                },
+                "user_id": {
+                  "example": "any"
+                },
+                "check_in_date": {
+                  "example": "any"
+                },
+                "check_out_date": {
+                  "example": "any"
+                },
+                "status": {
+                  "example": "any"
+                },
+                "total_price": {
+                  "example": "any"
+                }
               }
             }
           }
@@ -582,11 +630,21 @@
             "schema": {
               "type": "object",
               "properties": {
-    "user_id": { "type": "string", "example": "64f8f9f1b2c3456789abcdea" },
-    "post_id": { "type": "string", "example": "64f8f9f1b2c3456789abcded" },
-    "review_date": { "type": "string", "format": "date", "example": "2025-08-01" },
-    "review_text": { "type": "string", "example": "Great place! Very clean and close to everything." },
-    "ratings": { "type": "number", "example": 4.5 }
+                "user_id": {
+                  "example": "any"
+                },
+                "post_id": {
+                  "example": "any"
+                },
+                "review_date": {
+                  "example": "any"
+                },
+                "review_text": {
+                  "example": "any"
+                },
+                "ratings": {
+                  "example": "any"
+                }
               }
             }
           }
@@ -664,11 +722,21 @@
             "schema": {
               "type": "object",
               "properties": {
-    "user_id": { "type": "string", "example": "64f8f9f1b2c3456789abcdea" },
-    "post_id": { "type": "string", "example": "64f8f9f1b2c3456789abcded" },
-    "review_date": { "type": "string", "format": "date", "example": "2025-08-01" },
-    "review_text": { "type": "string", "example": "Great place! Very clean and close to everything." },
-    "ratings": { "type": "number", "example": 4.5 }
+                "user_id": {
+                  "example": "any"
+                },
+                "post_id": {
+                  "example": "any"
+                },
+                "review_date": {
+                  "example": "any"
+                },
+                "review_text": {
+                  "example": "any"
+                },
+                "ratings": {
+                  "example": "any"
+                }
               }
             }
           }
@@ -775,15 +843,30 @@
             "schema": {
               "type": "object",
               "properties": {
-"googleId": { "type": "string", "example": "11223344556677889900" },
-    "displayName": { "type": "string", "example": "John Doe" },
-    "firstName": { "type": "string", "example": "John" },
-    "lastName": { "type": "string", "example": "Doe" },
-    "email": { "type": "string", "format": "email", "example": "john.doe@example.com" },
-    "isAdmin": { "type": "boolean", "default": false, "example": false },
-    "isCustomer": { "type": "boolean", "default": true, "example": true },
-    "createdAt": { "type": "string", "format": "date-time", "example": "2025-08-13T14:48:00.000Z" }
-  
+                "googleId": {
+                  "example": "any"
+                },
+                "displayName": {
+                  "example": "any"
+                },
+                "firstName": {
+                  "example": "any"
+                },
+                "lastName": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                },
+                "isAdmin": {
+                  "example": "any"
+                },
+                "isCustomer": {
+                  "example": "any"
+                },
+                "createdAt": {
+                  "example": "any"
+                }
               }
             }
           }
@@ -861,15 +944,30 @@
             "schema": {
               "type": "object",
               "properties": {
-"googleId": { "type": "string", "example": "11223344556677889900" },
-    "displayName": { "type": "string", "example": "John Doe" },
-    "firstName": { "type": "string", "example": "John" },
-    "lastName": { "type": "string", "example": "Doe" },
-    "email": { "type": "string", "format": "email", "example": "john.doe@example.com" },
-    "isAdmin": { "type": "boolean", "default": false, "example": false },
-    "isCustomer": { "type": "boolean", "default": true, "example": true },
-    "createdAt": { "type": "string", "format": "date-time", "example": "2025-08-13T14:48:00.000Z" }
-  
+                "googleId": {
+                  "example": "any"
+                },
+                "displayName": {
+                  "example": "any"
+                },
+                "firstName": {
+                  "example": "any"
+                },
+                "lastName": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                },
+                "isAdmin": {
+                  "example": "any"
+                },
+                "isCustomer": {
+                  "example": "any"
+                },
+                "createdAt": {
+                  "example": "any"
+                }
               }
             }
           }

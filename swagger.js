@@ -1,13 +1,15 @@
 const swaggerAutogen = require('swagger-autogen')();
 require('dotenv').config();
+const { execSync } = require('child_process');
 const isProduction = process.env.NODE_ENV === 'production'
+const commits = execSync('git rev-list --count HEAD').toString().trim();
 
 const doc = {
     info: {
         title: 'SaintsBnB API',
         description:
             'Api for SaintsBnB to display endpoints available and ready for consumption',
-        version: '1.0.0',
+       version: `1.0.${commits}`,
     },
     host: isProduction ?  'saintsbnb.onrender.com' : 'localhost:3000',
     basePath: '/',
