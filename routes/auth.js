@@ -5,12 +5,12 @@ const router = express.Router();
 // Mount Google routes only if all env vars exist
 const hasGoogle =
   process.env.GOOGLE_CLIENT_ID &&
-  process.env.GOOGLE_CLIENT_SECRET &&
-  process.env.GOOGLE_CALLBACK_URL;
+  process.env.GOOGLE_CLIENT_SECRET;
+
 if (hasGoogle) {
   router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
   router.get('/google/callback',
-    passport.authenticate('google', { failureRedirect: '/' }),
+    passport.authenticate('google', { failureRedirect: '/api-docs' }),
     (req, res) => res.redirect('/')
   );
 }
