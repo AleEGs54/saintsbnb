@@ -9,15 +9,17 @@ const handleValidation = (req, res, next) => {
 };
 
 const isAuthenticated = (req, res, next) => {
-  
-  if (!req.session.user) {
-    return res.status(401).json({ 
-      message: 'Unauthorized - Please log in with Google first',
-      loginUrl: '/auth/google'
-    });
-  } 
-  
-  next();
+  // Passport session check works for both Google and GitHub
+  if (req.isAuthenticated && req.isAuthenticated()) return next();
+  if (req.user) return next();
+  // generic 401 with both login options
+  return res.status(401).json({
+    message: 'Unauthorized – please log in',
+    loginUrls: {
+      github: '/auth/login',
+      google: '/auth/google'
+    }
+  });
 };
 
-module.exports = {handleValidation, isAuthenticated};
+module.exports = { handleValidation, isAuthenticated }

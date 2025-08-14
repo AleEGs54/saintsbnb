@@ -1,26 +1,28 @@
+
 const router = require('express').Router();
 
 
-//swagger route.
 router.use('/api-docs', require('./swagger'));
 router.use('/posts', require('./post'));
 router.use('/reservations', require('./reservation'));
 router.use('/reviews', require('./review'));
 router.use('/user', require('./user'));
-router.use('/auth', require('./auth'));
+router.use('/auth', require('./auth')); // <- auth routes live here
 
-
-router.get("/", (req, res) => {
+// Home
+router.get('/', (req, res) => {
   // #swagger.tags = ['Home']
   // #swagger.description = 'Home page endpoint'
-  res.send("Welcome to the home page!");
+  res.send('Welcome to the home page!');
 });
 
-router.get("/logoutscreen", (req, res) => {
-  // #swagger.tags = ['Home']
-  // #swagger.description = 'Home page endpoint'
-  res.send("Welcome to the home page! You have been logged out.");
+router.get('/login', (req, res) => {
+  res.redirect('/auth/login');
 });
 
+// Optional: a simple "logged out" screen
+router.get('/logoutscreen', (req, res) => {
+  res.send('Welcome to the home page! You have been logged out.');
+});
 
 module.exports = router;

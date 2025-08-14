@@ -64,12 +64,19 @@
         }
       }
     },
+    "/login": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/logoutscreen": {
       "get": {
-        "tags": [
-          "Home"
-        ],
-        "description": "Home page endpoint",
+        "description": "",
         "responses": {
           "200": {
             "description": "OK"
@@ -1083,11 +1090,7 @@
     },
     "/auth/google": {
       "get": {
-        "tags": [
-          "Auth"
-        ],
-        "summary": "Initiate Google OAuth login",
-        "description": "Initiate Google OAuth login",
+        "description": "",
         "responses": {
           "default": {
             "description": ""
@@ -1097,11 +1100,7 @@
     },
     "/auth/google/callback": {
       "get": {
-        "tags": [
-          "Auth"
-        ],
-        "summary": "Handle Google OAuth callback",
-        "description": "Google OAuth callback for authentication",
+        "description": "",
         "responses": {
           "default": {
             "description": ""
@@ -1109,13 +1108,42 @@
         }
       }
     },
+    "/auth/login": {
+      "get": {
+        "description": "",
+        "responses": {
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/auth/github/callback": {
+      "get": {
+        "description": "",
+        "responses": {
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
     "/auth/logout": {
       "get": {
-        "tags": [
-          "Auth"
-        ],
-        "summary": "Logout the current user and clear session",
-        "description": "Logout the current user and clear session",
+        "description": "",
         "responses": {
           "default": {
             "description": ""
